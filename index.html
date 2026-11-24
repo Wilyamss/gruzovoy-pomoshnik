@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Грузовой помощник — грузоперевозки в Новороссийске и Краснодарском крае</title>
+<meta name="description" content="Грузовой помощник: перевозка мебели, бытовой техники, личных вещей и небольшие переезды по Новороссийску и Краснодарскому краю. Онлайн-заявка в WhatsApp.">
+<meta name="theme-color" content="#252A2D">
+<meta property="og:title" content="Грузовой помощник — грузоперевозки">
+<meta property="og:description" content="Доставим. Перевезём. Поможем. Новороссийск и Краснодарский край. Заявка за 2 минуты.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23252A2D'/%3E%3Cpath d='M12 22h26v20H12zM38 28h9l6 7v7H38z' fill='%2355C8BD'/%3E%3Ccircle cx='21' cy='44' r='5' fill='%23fff'/%3E%3Ccircle cx='45' cy='44' r='5' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --graphite:#252A2D;
+  --graphite-2:#2F3539;
+  --graphite-3:#3A4146;
+  --teal:#55C8BD;
+  --teal-dark:#2F9E93;
+  --teal-soft:#DDF3F0;
+  --bg:#F1F5F4;
+  --white:#FFFFFF;
+  --text:#1D2225;
+  --muted:#5F6B70;
+  --line:#D5DEDC;
+  --danger:#D64545;
+  --wa:#25D366;
+  --tg:#2AABEE;
+  --radius:16px;
+  --shadow:0 10px 30px rgba(37,42,45,.08);
+  --head:"Roboto Condensed", "Arial Narrow", Arial, sans-serif;
+  --body:"Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img,svg{display:block}
+a{color:inherit}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 16px}
+@media(min-width:768px){.wrap{padding:0 28px}}
+h1,h2,h3{font-family:var(--head);text-transform:uppercase;letter-spacing:.01em;line-height:1.05;margin:0}
+h2{font-size:clamp(28px,6vw,42px);color:var(--graphite)}
+.kicker{display:inline-block;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:var(--teal-dark);margin-bottom:10px}
+.section{padding:64px 0}
+@media(min-width:900px){.section{padding:88px 0}}
+.section-head{margin-bottom:28px;max-width:720px}
+.section-head p{color:var(--muted);margin:12px 0 0}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 22px;border-radius:12px;border:0;font-family:var(--head);font-weight:700;font-size:17px;text-transform:uppercase;letter-spacing:.03em;text-decoration:none;cursor:pointer;transition:transform .15s ease, background-color .15s ease, box-shadow .15s ease;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:scale(.98)}
+.btn svg{width:22px;height:22px;flex:none}
+.btn-teal{background:var(--teal);color:var(--graphite)}
+.btn-teal:hover{background:#6AD3C9}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-wa:hover{background:#1FBE5B}
+.btn-tg{background:var(--tg);color:#fff}
+.btn-tg:hover{background:#1E9BDB}
+.btn-ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 2px var(--teal)}
+.btn-outline{background:#fff;color:var(--graphite);box-shadow:inset 0 0 0 2px var(--graphite)}
+.btn-outline:hover{background:var(--graphite);color:#fff}
+.btn-block{width:100%}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+
+/* ---------- Header ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(37,42,45,.96);backdrop-filter:saturate(1.4) blur(8px);-webkit-backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none}
+.logo-mark{width:38px;height:38px;border-radius:10px;background:var(--teal);display:grid;place-items:center;flex:none}
+.logo-mark svg{width:24px;height:24px}
+.logo-text{font-family:var(--head);font-weight:800;text-transform:uppercase;font-size:18px;line-height:1;letter-spacing:.02em}
+.logo-text small{display:block;font-weight:600;font-size:11px;color:var(--teal);letter-spacing:.12em;margin-top:3px}
+.nav{display:none;gap:24px}
+.nav a{color:rgba(255,255,255,.8);text-decoration:none;font-weight:600;font-size:15px}
+.nav a:hover{color:var(--teal)}
+@media(min-width:900px){.nav{display:flex}}
+.top-phone{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-family:var(--head);font-weight:700;font-size:18px;white-space:nowrap}
+.top-phone svg{width:20px;height:20px;color:var(--teal)}
+.top-phone span{display:none}
+@media(min-width:520px){.top-phone span{display:inline}}
+.top-phone .ico-btn{width:42px;height:42px;border-radius:10px;background:var(--graphite-3);display:grid;place-items:center}
+@media(min-width:520px){.top-phone .ico-btn{background:transparent;width:auto;height:auto}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;background:var(--graphite);color:#fff;isolation:isolate}
+.hero::before{ /* hex pattern like the van's front */
+  content:"";position:absolute;inset:0;z-index:-2;opacity:.12;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97' viewBox='0 0 56 97'%3E%3Cpath d='M28 0l28 16v32L28 64 0 48V16zM28 64v33M0 48l-28 16M56 48l28 16' fill='none' stroke='%23ffffff' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-size:56px 97px;
+  -webkit-mask-image:linear-gradient(105deg,transparent 35%,#000 75%);mask-image:linear-gradient(105deg,transparent 35%,#000 75%);
+}
+.stripes{position:absolute;z-index:-1;pointer-events:none}
+.stripes i{position:absolute;display:block;background:var(--teal);transform:skewX(-38deg)}
+.stripes-a{left:-40px;bottom:0;width:420px;height:100%}
+.stripes-a i:nth-child(1){left:0;bottom:0;width:70px;height:62%;opacity:.95}
+.stripes-a i:nth-child(2){left:95px;bottom:0;width:22px;height:46%;opacity:.8}
+.stripes-a i:nth-child(3){left:135px;bottom:0;width:14px;height:38%;opacity:.6}
+.stripes-a i:nth-child(4){left:165px;bottom:0;width:8px;height:30%;opacity:.45}
+.hero-band{position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--teal);z-index:-1}
+.hero .wrap{position:relative;padding-top:56px;padding-bottom:72px}
+@media(min-width:900px){.hero .wrap{padding-top:96px;padding-bottom:110px}}
+.hero-grid{display:grid;gap:36px;align-items:center}
+@media(min-width:960px){.hero-grid{grid-template-columns:1.25fr .9fr;gap:56px}}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(85,200,189,.14);color:var(--teal);border:1px solid rgba(85,200,189,.35);padding:7px 12px;border-radius:999px;font-weight:700;font-size:13px}
+.badge svg{width:16px;height:16px}
+.hero h1{font-size:clamp(44px,12vw,92px);font-weight:800;margin:18px 0 0;letter-spacing:0}
+.hero h1 .accent{color:var(--teal)}
+.slogan-bar{display:inline-block;margin-top:18px;background:var(--teal);color:var(--graphite);font-family:var(--head);font-weight:800;text-transform:uppercase;font-size:clamp(17px,4.4vw,24px);padding:9px 26px 9px 18px;clip-path:polygon(0 0,100% 0,calc(100% - 16px) 100%,0 100%)}
+.hero-lead{color:rgba(255,255,255,.78);font-size:17px;max-width:560px;margin:20px 0 28px}
+.hero-actions{display:grid;gap:12px}
+@media(min-width:560px){.hero-actions{grid-template-columns:auto auto auto;justify-content:start}}
+.hero-card{background:var(--graphite-2);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.hero-card h3{font-size:22px;color:#fff;margin-bottom:16px}
+.svc-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.svc-list li{display:flex;gap:14px;align-items:center;font-weight:600}
+.svc-ico{width:46px;height:46px;border-radius:12px;background:rgba(85,200,189,.12);border:1px solid rgba(85,200,189,.4);display:grid;place-items:center;flex:none;color:var(--teal)}
+.svc-ico svg{width:26px;height:26px}
+.hero-card .phone-big{display:block;margin-top:20px;padding-top:18px;border-top:1px dashed rgba(255,255,255,.15);font-family:var(--head);font-weight:800;font-size:28px;color:#fff;text-decoration:none}
+.hero-card .phone-big small{display:block;font-size:13px;color:var(--teal);letter-spacing:.06em;font-weight:700}
+
+/* ---------- Services ---------- */
+.cards{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:600px){.cards{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.cards{grid-template-columns:repeat(4,1fr)}}
+.card{background:#fff;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;right:-18px;top:0;width:44px;height:6px;background:var(--teal);transform:skewX(-38deg)}
+.card .svc-ico{background:var(--teal-soft);border-color:transparent;color:var(--graphite);margin-bottom:14px}
+.card h3{font-size:21px;color:var(--graphite);margin-bottom:6px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+
+/* ---------- Steps ---------- */
+.steps{display:grid;gap:14px;counter-reset:s}
+@media(min-width:800px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:var(--graphite);color:#fff;border-radius:var(--radius);padding:22px 22px 24px;position:relative;overflow:hidden}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:var(--head);font-weight:800;font-size:44px;color:var(--teal);line-height:1;display:block;margin-bottom:10px}
+.step h3{font-size:20px;margin-bottom:6px}
+.step p{margin:0;color:rgba(255,255,255,.72);font-size:15px}
+
+/* ---------- Form ---------- */
+.order{background:var(--white)}
+.form-layout{display:grid;gap:24px}
+@media(min-width:1000px){.form-layout{grid-template-columns:1fr 340px;align-items:start}}
+.fs{border:0;margin:0 0 16px;padding:22px 18px;background:var(--bg);border-radius:var(--radius)}
+@media(min-width:600px){.fs{padding:26px 26px}}
+.fs legend{float:left;width:100%;display:flex;align-items:center;gap:12px;font-family:var(--head);font-weight:800;text-transform:uppercase;font-size:20px;color:var(--graphite);margin-bottom:18px;padding:0}
+.fs legend .num{width:32px;height:32px;border-radius:9px;background:var(--graphite);color:var(--teal);display:grid;place-items:center;font-size:17px;flex:none}
+.fs > *:not(legend){clear:both}
+.grid2{display:grid;gap:14px}
+@media(min-width:600px){.grid2{grid-template-columns:1fr 1fr}}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.grid2 .field{margin-bottom:0}
+.grid2 + .field,.grid2 + .grid2,.field + .grid2{margin-top:14px}
+.label{font-weight:700;font-size:14px;color:var(--graphite)}
+.label .req{color:var(--danger)}
+.label .opt{font-weight:500;color:var(--muted)}
+.hint{font-size:13px;color:var(--muted);margin-top:-2px}
+input[type=text],input[type=tel],input[type=date],input[type=number],select,textarea{
+  width:100%;min-height:52px;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--text);
+  font:inherit;font-size:16px; /* 16px stops iOS zoom */
+  transition:border-color .15s, box-shadow .15s;-webkit-appearance:none;appearance:none}
+input[type=date]{display:block;line-height:1.2}
+input[type=date]::-webkit-date-and-time-value{text-align:left}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23252A2D' stroke-width='2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+textarea{min-height:110px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(85,200,189,.22)}
+.field.invalid input,.field.invalid select{border-color:var(--danger);box-shadow:0 0 0 4px rgba(214,69,69,.12)}
+.err{display:none;color:var(--danger);font-size:13px;font-weight:600}
+.field.invalid .err{display:block}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:#fff;border:1.5px solid var(--line);font-weight:600;font-size:15px;transition:all .15s;user-select:none}
+.chip input:checked + span{background:var(--graphite);border-color:var(--graphite);color:#fff}
+.chip input:checked + span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--teal);margin-right:8px}
+.chip input:focus-visible + span{outline:3px solid var(--teal);outline-offset:2px}
+
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;width:100%;height:100%}
+.seg span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:42px;border-radius:9px;font-weight:700;font-size:14px;color:var(--muted);transition:all .15s;padding:0 6px;line-height:1.15}
+.seg input:checked + span{background:var(--teal);color:var(--graphite)}
+.seg input:focus-visible + span{outline:3px solid var(--graphite);outline-offset:-3px}
+
+.addr-block{background:#fff;border-radius:14px;padding:16px;border:1.5px solid var(--line)}
+.addr-block h4{margin:0 0 12px;font-family:var(--head);text-transform:uppercase;font-size:16px;display:flex;align-items:center;gap:8px;color:var(--graphite)}
+.addr-block h4 i{width:10px;height:10px;border-radius:50%;background:var(--teal);display:block}
+.addr-block h4 i.to{background:var(--graphite);box-shadow:0 0 0 3px var(--teal)}
+.addr-block .field:last-child{margin-bottom:0}
+.floor-row{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:end}
+
+/* Side summary */
+.aside{display:grid;gap:14px}
+@media(min-width:1000px){.aside{position:sticky;top:84px}}
+.summary{background:var(--graphite);color:#fff;border-radius:20px;padding:22px;overflow:hidden;position:relative}
+.summary::after{content:"";position:absolute;right:-30px;bottom:0;width:90px;height:8px;background:var(--teal);transform:skewX(-38deg)}
+.summary h3{font-size:22px;margin-bottom:6px}
+.summary p{color:rgba(255,255,255,.72);font-size:14px;margin:0 0 16px}
+.progress{height:8px;border-radius:999px;background:var(--graphite-3);overflow:hidden;margin-bottom:8px}
+.progress b{display:block;height:100%;width:0;background:var(--teal);transition:width .3s ease}
+.progress-label{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:18px}
+.summary .btn{margin-top:10px}
+.summary .btn-outline{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.3)}
+.summary .btn-outline:hover{box-shadow:inset 0 0 0 2px var(--teal);background:transparent}
+.form-note{font-size:13px;color:rgba(255,255,255,.6);margin-top:14px}
+.preview{background:var(--bg);border-radius:var(--radius);padding:16px 18px}
+.preview summary{cursor:pointer;font-weight:700;color:var(--graphite);list-style:none;display:flex;justify-content:space-between;align-items:center}
+.preview summary::-webkit-details-marker{display:none}
+.preview summary::after{content:"+";font-size:22px;color:var(--teal-dark);line-height:1}
+.preview[open] summary::after{content:"–"}
+.preview pre{white-space:pre-wrap;word-break:break-word;font-family:var(--body);font-size:14px;margin:12px 0 0;color:var(--text);max-height:360px;overflow:auto}
+.clear-link{background:none;border:0;color:var(--muted);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer;padding:6px 0;justify-self:start}
+
+/* ---------- Prices ---------- */
+.prices{background:var(--graphite);color:#fff;position:relative;overflow:hidden;isolation:isolate}
+.prices h2{color:#fff}
+.prices .section-head p{color:rgba(255,255,255,.7)}
+.prices .kicker{color:var(--teal)}
+.prices::before{content:"";position:absolute;right:-120px;top:-40px;width:520px;height:120%;z-index:-1;background:repeating-linear-gradient(-52deg,transparent 0 46px,rgba(85,200,189,.07) 46px 70px)}
+.price-hero{display:grid;gap:14px;margin-bottom:14px}
+@media(min-width:800px){.price-hero{grid-template-columns:1.1fr 1fr}}
+.price-main{background:var(--teal);color:var(--graphite);border-radius:20px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;min-height:200px;position:relative;overflow:hidden}
+.price-main::after{content:"";position:absolute;right:-20px;top:24px;width:140px;height:14px;background:var(--graphite);transform:skewX(-38deg);opacity:.9}
+.price-main .t{font-family:var(--head);font-weight:800;text-transform:uppercase;font-size:20px}
+.price-main .v{font-family:var(--head);font-weight:800;font-size:clamp(48px,12vw,72px);line-height:1}
+.price-main .v small{font-size:.45em;margin-right:6px}
+.price-main .d{font-weight:600;font-size:14px;opacity:.8}
+.price-list{background:var(--graphite-2);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:8px 22px}
+.price-row{display:flex;align-items:baseline;gap:10px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.price-row:last-child{border-bottom:0}
+.price-row .n{font-weight:600;color:rgba(255,255,255,.88)}
+.price-row .dots{flex:1;border-bottom:2px dotted rgba(255,255,255,.18);transform:translateY(-4px);min-width:16px}
+.price-row .p{font-family:var(--head);font-weight:800;font-size:22px;color:var(--teal);white-space:nowrap}
+.price-row .p.ind{font-size:16px;text-transform:uppercase}
+.price-note{display:flex;gap:14px;background:rgba(255,255,255,.05);border:1px solid rgba(85,200,189,.35);border-radius:16px;padding:18px;font-size:15px;color:rgba(255,255,255,.85)}
+.price-note svg{width:24px;height:24px;color:var(--teal);flex:none;margin-top:1px}
+.price-note b{color:#fff}
+
+/* ---------- Contacts ---------- */
+.contact-grid{display:grid;gap:14px}
+@media(min-width:800px){.contact-grid{grid-template-columns:repeat(3,1fr)}}
+.contact{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;text-decoration:none;display:flex;gap:16px;align-items:center;transition:transform .15s, box-shadow .15s}
+.contact:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(37,42,45,.12)}
+.contact .ci{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;flex:none;color:#fff}
+.contact .ci svg{width:28px;height:28px}
+.contact small{display:block;color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.contact strong{font-family:var(--head);font-size:22px;color:var(--graphite)}
+.area{margin-top:22px;background:var(--graphite);color:#fff;border-radius:var(--radius);padding:20px 22px;display:flex;gap:14px;align-items:center}
+.area svg{width:28px;height:28px;color:var(--teal);flex:none}
+
+footer{background:#1B1F21;color:rgba(255,255,255,.6);padding:28px 0 110px;font-size:14px}
+@media(min-width:900px){footer{padding-bottom:28px}}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
+
+/* ---------- Mobile bottom bar ---------- */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(37,42,45,.97);border-top:1px solid rgba(255,255,255,.08);padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:grid;grid-template-columns:52px 52px 1fr;gap:8px;transform:translateY(110%);transition:transform .25s ease}
+.dock.show{transform:none}
+.dock a{min-height:50px;border-radius:12px;display:grid;place-items:center;text-decoration:none}
+.dock a svg{width:24px;height:24px}
+.dock .d-call{background:var(--graphite-3);color:var(--teal)}
+.dock .d-wa{background:var(--wa);color:#fff}
+.dock .d-order{background:var(--teal);color:var(--graphite);font-family:var(--head);font-weight:800;text-transform:uppercase;font-size:16px}
+@media(min-width:900px){.dock{display:none}}
+
+/* ---------- Toast ---------- */
+.toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);opacity:0;background:var(--graphite);color:#fff;padding:13px 18px;border-radius:12px;font-weight:600;font-size:15px;box-shadow:0 12px 30px rgba(0,0,0,.25);z-index:100;pointer-events:none;transition:all .25s ease;max-width:calc(100% - 32px);display:flex;gap:10px;align-items:center;border-left:4px solid var(--teal)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.bad{border-left-color:var(--danger)}
+@media(min-width:900px){.toast{bottom:30px}}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<!-- SVG icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-van" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h12v9H2zM14 10h4l3 3.5V16h-7"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h3.5l1.7 4.3-2.3 1.5a11 11 0 0 0 5.3 5.3l1.5-2.3L19 13.5V17a2 2 0 0 1-2.2 2A15 15 0 0 1 3 5.2 2 2 0 0 1 5 3z"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.86 9.86 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23a8.2 8.2 0 0 1 8.23 8.24c0 4.54-3.7 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.29z"/></symbol>
+    <symbol id="i-tg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 4.2 2.9 11.4c-1.3.5-1.3 1.2-.2 1.6l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.3-1.5zM8.9 14.2l9.8-6.2c.5-.3.9-.1.5.2l-8.1 7.3-.3 3.4-1.9-4.7z"/></symbol>
+    <symbol id="i-sofa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><path d="M3 12a2 2 0 0 1 4 0v2h10v-2a2 2 0 0 1 4 0v5H3z"/><path d="M5 17v2M19 17v2"/></symbol>
+    <symbol id="i-fridge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2"/><path d="M6 10h12M9 6v2M9 13v3"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9M7.5 5.2l9 4.5"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.1"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Грузовой помощник — наверх">
+      <span class="logo-mark"><svg style="color:#252A2D"><use href="#i-van"/></svg></span>
+      <span class="logo-text">Грузовой помощник<small>Грузоперевозки</small></span>
+    </a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#services">Услуги</a>
+      <a href="#prices">Цены</a>
+      <a href="#order">Заявка</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a class="top-phone" href="tel:+79883424900" aria-label="Позвонить +7 988 342-49-00">
+      <span class="ico-btn"><svg><use href="#i-phone"/></svg></span><span>+7 988 342-49-00</span>
+    </a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="stripes stripes-a" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="hero-band" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="badge"><svg><use href="#i-pin"/></svg>Новороссийск и Краснодарский край</span>
+          <h1>Грузовой <span class="accent">помощник</span></h1>
+          <div class="slogan-bar">Доставим. Перевезём. Поможем.</div>
+          <p class="hero-lead">Перевозка мебели, бытовой техники и личных вещей, небольшие переезды. Цельнометаллический фургон Лада Ларгус — груз защищён от дождя и пыли.</p>
+          <div class="hero-actions">
+            <a class="btn btn-teal" href="#order">Оставить заявку</a>
+            <a class="btn btn-wa" href="https://wa.me/79883424900" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+            <a class="btn btn-tg" href="https://t.me/seywax" target="_blank" rel="noopener"><svg><use href="#i-tg"/></svg>Telegram</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Что перевозим">
+          <h3>Что перевозим</h3>
+          <ul class="svc-list">
+            <li><span class="svc-ico"><svg><use href="#i-sofa"/></svg></span>Мебель</li>
+            <li><span class="svc-ico"><svg><use href="#i-fridge"/></svg></span>Бытовая техника</li>
+            <li><span class="svc-ico"><svg><use href="#i-box"/></svg></span>Личные вещи и коробки</li>
+            <li><span class="svc-ico"><svg><use href="#i-home"/></svg></span>Небольшие переезды</li>
+          </ul>
+          <a class="phone-big" href="tel:+79883424900"><small>Звоните</small>+7 988 342-49-00</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Услуги</span>
+        <h2>Аккуратно довезём то, что вам дорого</h2>
+        <p>Работаем по Новороссийску и Краснодарскому краю. Поможем с погрузкой, выносом и подъёмом на этаж.</p>
+      </div>
+      <div class="cards">
+        <article class="card"><span class="svc-ico"><svg><use href="#i-sofa"/></svg></span><h3>Доставка мебели</h3><p>Диваны, шкафы, кровати, столы — из магазина или между адресами.</p></article>
+        <article class="card"><span class="svc-ico"><svg><use href="#i-fridge"/></svg></span><h3>Бытовая техника</h3><p>Холодильники, стиральные машины, плиты — с фиксацией в кузове.</p></article>
+        <article class="card"><span class="svc-ico"><svg><use href="#i-box"/></svg></span><h3>Личные вещи</h3><p>Коробки, сумки, стройматериалы, покупки с маркетплейсов.</p></article>
+        <article class="card"><span class="svc-ico"><svg><use href="#i-home"/></svg></span><h3>Небольшие переезды</h3><p>Квартира, комната, офис — перевезём за один или несколько рейсов.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Как это работает</span>
+        <h2>Заявка за 2 минуты</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Заполните форму</h3><p>Адреса, дата, что везём, этажи. Чем подробнее — тем точнее цена.</p></div>
+        <div class="step"><h3>Отправьте в WhatsApp</h3><p>Заявка соберётся в готовое сообщение. Останется нажать «Отправить».</p></div>
+        <div class="step"><h3>Согласуем стоимость</h3><p>Перезвоню или напишу, назову итоговую цену до начала перевозки.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER FORM -->
+  <section class="section order" id="order">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Заявка на перевозку</span>
+        <h2>Расскажите, что нужно перевезти</h2>
+        <p>Обязательные поля отмечены <span style="color:var(--danger)">*</span>. Остальное — если знаете. Данные сохраняются на вашем телефоне, пока вы заполняете форму.</p>
+      </div>
+
+      <div class="form-layout">
+        <form id="orderForm" novalidate autocomplete="on">
+          <!-- 1. Contacts -->
+          <fieldset class="fs">
+            <legend><span class="num">1</span>Контакты</legend>
+            <div class="grid2">
+              <div class="field" data-req>
+                <label class="label" for="name">Ваше имя <span class="req">*</span></label>
+                <input type="text" id="name" name="name" autocomplete="given-name" placeholder="Например, Анна" maxlength="60">
+                <span class="err">Укажите, как к вам обращаться</span>
+              </div>
+              <div class="field" data-req>
+                <label class="label" for="phone">Телефон <span class="req">*</span></label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__">
+                <span class="err">Введите номер полностью: 11 цифр</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 2. Route -->
+          <fieldset class="fs">
+            <legend><span class="num">2</span>Маршрут и время</legend>
+            <div class="grid2">
+              <div class="field" data-req>
+                <label class="label" for="from">Адрес погрузки <span class="req">*</span></label>
+                <input type="text" id="from" name="from" autocomplete="off" placeholder="Город, улица, дом, подъезд">
+                <span class="err">Укажите, откуда забрать груз</span>
+              </div>
+              <div class="field" data-req>
+                <label class="label" for="to">Адрес доставки <span class="req">*</span></label>
+                <input type="text" id="to" name="to" autocomplete="off" placeholder="Город, улица, дом, подъезд">
+                <span class="err">Укажите, куда доставить</span>
+              </div>
+            </div>
+            <div class="grid2">
+              <div class="field">
+                <label class="label" for="date">Желаемая дата</label>
+                <input type="date" id="date" name="date">
+              </div>
+              <div class="field">
+                <label class="label" for="time">Время</label>
+                <select id="time" name="time">
+                  <option value="">Любое / обсудим</option>
+                  <option>Утро (8:00–12:00)</option>
+                  <option>День (12:00–16:00)</option>
+                  <option>Вечер (16:00–20:00)</option>
+                  <option>Как можно скорее</option>
+                  <option value="exact">Точное время…</option>
+                </select>
+              </div>
+            </div>
+            <div class="field" id="exactTimeWrap" hidden style="margin-top:14px">
+              <label class="label" for="exactTime">Точное время</label>
+              <input type="text" id="exactTime" name="exactTime" placeholder="Например, 14:30" inputmode="numeric" maxlength="20">
+            </div>
+          </fieldset>
+
+          <!-- 3. Cargo -->
+          <fieldset class="fs">
+            <legend><span class="num">3</span>Груз</legend>
+            <div class="field">
+              <span class="label" id="cargoLbl">Тип груза <span class="opt">(можно несколько)</span></span>
+              <div class="chips" role="group" aria-labelledby="cargoLbl">
+                <label class="chip"><input type="checkbox" name="cargo" value="Мебель"><span>Мебель</span></label>
+                <label class="chip"><input type="checkbox" name="cargo" value="Бытовая техника"><span>Бытовая техника</span></label>
+                <label class="chip"><input type="checkbox" name="cargo" value="Личные вещи / коробки"><span>Личные вещи / коробки</span></label>
+                <label class="chip"><input type="checkbox" name="cargo" value="Переезд"><span>Переезд</span></label>
+                <label class="chip"><input type="checkbox" name="cargo" value="Стройматериалы"><span>Стройматериалы</span></label>
+                <label class="chip"><input type="checkbox" name="cargo" value="Другое"><span>Другое</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="items">Что везём, количество и примерный объём</label>
+              <textarea id="items" name="items" placeholder="Например: диван, холодильник, 10 коробок. Примерно половина фургона."></textarea>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label class="label" for="dims">Вес и габариты <span class="opt">(если известны)</span></label>
+              <input type="text" id="dims" name="dims" placeholder="Например: холодильник 185×60×65 см, ~70 кг">
+              <span class="hint">Фургон Лада Ларгус: длина груза до ~1,9 м.</span>
+            </div>
+          </fieldset>
+
+          <!-- 4. Floors & help -->
+          <fieldset class="fs">
+            <legend><span class="num">4</span>Этажи и помощь</legend>
+            <div class="grid2">
+              <div class="addr-block">
+                <h4><i></i>Погрузка</h4>
+                <div class="floor-row">
+                  <div class="field" style="margin:0">
+                    <label class="label" for="floorFrom">Этаж</label>
+                    <input type="number" id="floorFrom" name="floorFrom" min="0" max="40" inputmode="numeric" placeholder="—">
+                  </div>
+                  <div class="field" style="margin:0">
+                    <span class="label" id="liftFromLbl">Лифт</span>
+                    <div class="seg" role="radiogroup" aria-labelledby="liftFromLbl">
+                      <label><input type="radio" name="liftFrom" value="Есть"><span>Есть</span></label>
+                      <label><input type="radio" name="liftFrom" value="Грузовой"><span>Грузовой</span></label>
+                      <label><input type="radio" name="liftFrom" value="Нет"><span>Нет</span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="addr-block">
+                <h4><i class="to"></i>Выгрузка</h4>
+                <div class="floor-row">
+                  <div class="field" style="margin:0">
+                    <label class="label" for="floorTo">Этаж</label>
+                    <input type="number" id="floorTo" name="floorTo" min="0" max="40" inputmode="numeric" placeholder="—">
+                  </div>
+                  <div class="field" style="margin:0">
+                    <span class="label" id="liftToLbl">Лифт</span>
+                    <div class="seg" role="radiogroup" aria-labelledby="liftToLbl">
+                      <label><input type="radio" name="liftTo" value="Есть"><span>Есть</span></label>
+                      <label><input type="radio" name="liftTo" value="Грузовой"><span>Грузовой</span></label>
+                      <label><input type="radio" name="liftTo" value="Нет"><span>Нет</span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid2">
+              <div class="field">
+                <span class="label" id="loaderLbl">Нужен грузчик?</span>
+                <div class="seg" role="radiogroup" aria-labelledby="loaderLbl">
+                  <label><input type="radio" name="loader" value="Нет"><span>Нет</span></label>
+                  <label><input type="radio" name="loader" value="1 грузчик"><span>1</span></label>
+                  <label><input type="radio" name="loader" value="2 грузчика"><span>2</span></label>
+                  <label><input type="radio" name="loader" value="Не знаю, подскажите"><span>Не знаю</span></label>
+                </div>
+              </div>
+              <div class="field">
+                <span class="label" id="carryLbl">Помощь с выносом и подъёмом?</span>
+                <div class="seg" role="radiogroup" aria-labelledby="carryLbl">
+                  <label><input type="radio" name="carry" value="Да"><span>Да</span></label>
+                  <label><input type="radio" name="carry" value="Нет, справимся сами"><span>Нет, сами</span></label>
+                  <label><input type="radio" name="carry" value="Частично"><span>Частично</span></label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 5. Notes -->
+          <fieldset class="fs">
+            <legend><span class="num">5</span>Пожелания</legend>
+            <div class="field" style="margin-bottom:0">
+              <label class="label" for="notes">Дополнительные пожелания</label>
+              <textarea id="notes" name="notes" placeholder="Разборка мебели, упаковка, узкий проход, нужна доп. остановка, удобное время для звонка…"></textarea>
+            </div>
+          </fieldset>
+        </form>
+
+        <!-- Sticky summary / actions -->
+        <div class="aside">
+          <div class="summary">
+            <h3>Отправка заявки</h3>
+            <p>Заявка откроется в WhatsApp готовым сообщением — останется нажать «Отправить».</p>
+            <div class="progress" aria-hidden="true"><b id="progBar"></b></div>
+            <div class="progress-label" id="progLabel">Заполнено 0 из 4 обязательных полей</div>
+            <a class="btn btn-wa btn-block" id="sendWa" href="https://wa.me/79883424900" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Отправить заявку в WhatsApp</a>
+            <button type="button" class="btn btn-outline btn-block" id="copyBtn"><svg><use href="#i-copy"/></svg>Скопировать заявку</button>
+            <a class="btn btn-tg btn-block" href="https://t.me/seywax" target="_blank" rel="noopener" id="tgBtn" style="margin-top:10px"><svg><use href="#i-tg"/></svg>Написать в Telegram</a>
+            <div class="form-note">В Telegram удобно вставить скопированную заявку. Отправляя заявку, вы соглашаетесь, что я свяжусь с вами по указанному номеру.</div>
+          </div>
+          <details class="preview" id="previewBox">
+            <summary>Предпросмотр сообщения</summary>
+            <pre id="previewText"></pre>
+          </details>
+          <button type="button" class="clear-link" id="clearBtn">Очистить форму</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICES -->
+  <section class="section prices" id="prices">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Тарифы</span>
+        <h2>Ориентировочные цены</h2>
+        <p>Прозрачно и без сюрпризов: стоимость называю заранее.</p>
+      </div>
+      <div class="price-hero">
+        <div class="price-main">
+          <div class="t">Минимальный<br>городской заказ</div>
+          <div>
+            <div class="v"><small>от</small>1 500 ₽</div>
+            <div class="d">Перевозка по городу</div>
+          </div>
+        </div>
+        <div class="price-list">
+          <div class="price-row"><span class="n">Дополнительный час</span><span class="dots"></span><span class="p">600 ₽</span></div>
+          <div class="price-row"><span class="n">Дополнительный километр</span><span class="dots"></span><span class="p">35 ₽</span></div>
+          <div class="price-row"><span class="n">Дополнительная остановка</span><span class="dots"></span><span class="p">300 ₽</span></div>
+          <div class="price-row"><span class="n">Услуги грузчика</span><span class="dots"></span><span class="p">от 700 ₽/ч</span></div>
+          <div class="price-row"><span class="n">Пригородные маршруты</span><span class="dots"></span><span class="p ind">Индивидуально</span></div>
+        </div>
+      </div>
+      <div class="price-note">
+        <svg><use href="#i-info"/></svg>
+        <div><b>Цены предварительные.</b> Итоговая стоимость согласовывается до начала перевозки и зависит от маршрута, объёма груза, этажности и дополнительных услуг.</div>
+      </div>
+      <div style="margin-top:22px"><a class="btn btn-teal" href="#order">Рассчитать мою перевозку</a></div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="section" id="contacts">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Контакты</span>
+        <h2>Свяжитесь удобным способом</h2>
+      </div>
+      <div class="contact-grid">
+        <a class="contact" href="tel:+79883424900"><span class="ci" style="background:var(--graphite);color:var(--teal)"><svg><use href="#i-phone"/></svg></span><span><small>Телефон</small><strong>+7 988 342-49-00</strong></span></a>
+        <a class="contact" href="https://wa.me/79883424900" target="_blank" rel="noopener"><span class="ci" style="background:var(--wa)"><svg><use href="#i-wa"/></svg></span><span><small>WhatsApp</small><strong>+7 988 342-49-00</strong></span></a>
+        <a class="contact" href="https://t.me/seywax" target="_blank" rel="noopener"><span class="ci" style="background:var(--tg)"><svg><use href="#i-tg"/></svg></span><span><small>Telegram</small><strong>@seywax</strong></span></a>
+      </div>
+      <div class="area"><svg><use href="#i-pin"/></svg><div><b>География работы:</b> Новороссийск и Краснодарский край. Автомобиль — серебристая Лада Ларгус, цельнометаллический фургон.</div></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b>Грузовой помощник</b> · Доставим. Перевезём. Поможем.</span>
+    <span>Новороссийск и Краснодарский край · <a href="tel:+79883424900">+7 988 342-49-00</a></span>
+  </div>
+</footer>
+
+<nav class="dock" id="dock" aria-label="Быстрая связь">
+  <a class="d-call" href="tel:+79883424900" aria-label="Позвонить"><svg><use href="#i-phone"/></svg></a>
+  <a class="d-wa" href="https://wa.me/79883424900" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>
+  <a class="d-order" href="#order">Оставить заявку</a>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+  var OWNER_WA = "79883424900";          // +7 988 342-49-00
+  var STORE_KEY = "gp-order-draft-v1";
+  var form = document.getElementById("orderForm");
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------- Toast ---------- */
+  var toastEl = $("toast"), toastT;
+  function toast(msg, bad){
+    toastEl.textContent = msg;
+    toastEl.classList.toggle("bad", !!bad);
+    toastEl.classList.add("show");
+    clearTimeout(toastT);
+    toastT = setTimeout(function(){ toastEl.classList.remove("show"); }, 2800);
+  }
+
+  /* ---------- Date: no past dates ---------- */
+  (function(){
+    var d = new Date(), z = function(n){ return (n<10?"0":"")+n; };
+    $("date").min = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
+  })();
+
+  /* ---------- Exact time toggle ---------- */
+  $("time").addEventListener("change", function(){
+    $("exactTimeWrap").hidden = this.value !== "exact";
+    if (this.value === "exact") $("exactTime").focus();
+  });
+
+  /* ---------- Phone mask (+7 (XXX) XXX-XX-XX) ---------- */
+  var phone = $("phone");
+  function phoneDigits(v){
+    var d = (v||"").replace(/\D/g,"");
+    if (d.length && (d[0]==="8" || d[0]==="7")) d = d.slice(1);
+    return d.slice(0,10);
+  }
+  function formatPhone(v){
+    var d = phoneDigits(v);
+    if (!d.length) return "";
+    var out = "+7 (" + d.slice(0,3);
+    if (d.length >= 3) out += ") ";
+    if (d.length > 3) out += d.slice(3,6);
+    if (d.length > 6) out += "-" + d.slice(6,8);
+    if (d.length > 8) out += "-" + d.slice(8,10);
+    return out;
+  }
+  phone.addEventListener("input", function(e){
+    if (e.inputType && e.inputType.indexOf("delete") === 0) return; // let user delete freely
+    phone.value = formatPhone(phone.value);
+  });
+  phone.addEventListener("blur", function(){ phone.value = formatPhone(phone.value); });
+  phone.addEventListener("focus", function(){ if (!phone.value) phone.value = "+7 ("; });
+
+  /* ---------- Read form ---------- */
+  function val(id){ return ($(id).value || "").trim(); }
+  function radio(name){ var r = form.querySelector('input[name="'+name+'"]:checked'); return r ? r.value : ""; }
+  function checks(name){ return Array.prototype.map.call(form.querySelectorAll('input[name="'+name+'"]:checked'), function(c){ return c.value; }); }
+
+  function formatDate(iso){
+    if (!iso) return "";
+    var p = iso.split("-"); if (p.length !== 3) return iso;
+    var d = new Date(+p[0], +p[1]-1, +p[2]);
+    var days = ["вс","пн","вт","ср","чт","пт","сб"];
+    return p[2]+"."+p[1]+"."+p[0]+" ("+days[d.getDay()]+")";
+  }
+  function floorLine(floor, lift){
+    var parts = [];
+    if (floor !== "") parts.push(floor === "0" ? "цоколь/частный дом" : floor + " этаж");
+    if (lift) parts.push("лифт: " + lift.toLowerCase());
+    return parts.join(", ");
+  }
+
+  function buildMessage(){
+    var t = $("time").value === "exact" ? val("exactTime") : $("time").value;
+    var when = [formatDate(val("date")), t].filter(Boolean).join(", ");
+    var cargo = checks("cargo").join(", ");
+    var lines = [];
+    lines.push("🚚 *Заявка — Грузовой помощник*");
+    lines.push("");
+    lines.push("👤 *Имя:* " + (val("name") || "—"));
+    lines.push("📞 *Телефон:* " + (phone.value && phoneDigits(phone.value).length ? formatPhone(phone.value) : "—"));
+    lines.push("");
+    lines.push("📍 *Погрузка:* " + (val("from") || "—"));
+    var ff = floorLine(val("floorFrom"), radio("liftFrom")); if (ff) lines.push("    ↳ " + ff);
+    lines.push("🏁 *Доставка:* " + (val("to") || "—"));
+    var ft = floorLine(val("floorTo"), radio("liftTo")); if (ft) lines.push("    ↳ " + ft);
+    lines.push("🗓 *Дата и время:* " + (when || "обсудим"));
+    lines.push("");
+    lines.push("📦 *Тип груза:* " + (cargo || "—"));
+    if (val("items")) lines.push("📋 *Что везём, кол-во, объём:* " + val("items"));
+    if (val("dims"))  lines.push("📐 *Вес и габариты:* " + val("dims"));
+    lines.push("");
+    lines.push("💪 *Грузчик:* " + (radio("loader") || "—"));
+    lines.push("🏢 *Помощь с выносом/подъёмом:* " + (radio("carry") || "—"));
+    if (val("notes")) { lines.push(""); lines.push("💬 *Пожелания:* " + val("notes")); }
+    return lines.join("\n");
+  }
+
+  /* ---------- Validation ---------- */
+  var required = [
+    { id:"name",  ok:function(){ return val("name").length >= 2; } },
+    { id:"phone", ok:function(){ return phoneDigits(phone.value).length === 10; } },
+    { id:"from",  ok:function(){ return val("from").length >= 3; } },
+    { id:"to",    ok:function(){ return val("to").length >= 3; } }
+  ];
+  function fieldOf(id){ return $(id).closest(".field"); }
+  function validate(showErrors){
+    var firstBad = null;
+    required.forEach(function(r){
+      var good = r.ok();
+      if (showErrors) fieldOf(r.id).classList.toggle("invalid", !good);
+      else if (good) fieldOf(r.id).classList.remove("invalid");
+      if (!good && !firstBad) firstBad = $(r.id);
+    });
+    return firstBad;
+  }
+
+  /* ---------- Progress + preview ---------- */
+  function refresh(){
+    var done = required.filter(function(r){ return r.ok(); }).length;
+    $("progBar").style.width = (done / required.length * 100) + "%";
+    $("progLabel").textContent = done === required.length
+      ? "Готово — можно отправлять ✓"
+      : "Заполнено " + done + " из " + required.length + " обязательных полей";
+    $("previewText").textContent = buildMessage().replace(/\*/g, "");
+    $("sendWa").href = waUrl();
+    validate(false);
+  }
+
+  /* ---------- Draft save (per-device convenience) ---------- */
+  function saveDraft(){
+    try {
+      var data = {};
+      Array.prototype.forEach.call(form.elements, function(el){
+        if (!el.name) return;
+        if (el.type === "checkbox") { (data[el.name] = data[el.name] || []); if (el.checked) data[el.name].push(el.value); }
+        else if (el.type === "radio") { if (el.checked) data[el.name] = el.value; }
+        else data[el.name] = el.value;
+      });
+      localStorage.setItem(STORE_KEY, JSON.stringify(data));
+    } catch(e){}
+  }
+  function loadDraft(){
+    try {
+      var raw = localStorage.getItem(STORE_KEY); if (!raw) return;
+      var data = JSON.parse(raw);
+      Array.prototype.forEach.call(form.elements, function(el){
+        if (!el.name || !(el.name in data)) return;
+        var v = data[el.name];
+        if (el.type === "checkbox") el.checked = Array.isArray(v) && v.indexOf(el.value) > -1;
+        else if (el.type === "radio") el.checked = v === el.value;
+        else el.value = v;
+      });
+      $("exactTimeWrap").hidden = $("time").value !== "exact";
+    } catch(e){}
+  }
+
+  form.addEventListener("input", function(){ refresh(); saveDraft(); });
+  form.addEventListener("change", function(){ refresh(); saveDraft(); });
+  form.addEventListener("submit", function(e){ e.preventDefault(); });
+
+  function requireValid(){
+    var bad = validate(true);
+    if (bad) {
+      toast("Заполните обязательные поля, отмеченные *", true);
+      bad.scrollIntoView({ behavior:"smooth", block:"center" });
+      setTimeout(function(){ try{ bad.focus({ preventScroll:true }); }catch(e){ bad.focus(); } }, 350);
+      return false;
+    }
+    return true;
+  }
+
+  /* ---------- Send to WhatsApp ---------- */
+  function waUrl(){ return "https://wa.me/" + OWNER_WA + "?text=" + encodeURIComponent(buildMessage()); }
+  // A real <a> link: works in iOS/Android browsers, in-app browsers and sandboxed viewers
+  $("sendWa").addEventListener("click", function(e){
+    if (!requireValid()) { e.preventDefault(); return; }
+    this.href = waUrl();
+    toast("Открываю WhatsApp…");
+  });
+
+  /* ---------- Copy ---------- */
+  function fallbackCopy(text){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", "");
+    ta.style.position = "fixed"; ta.style.top = "-1000px"; ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select(); ta.setSelectionRange(0, text.length);
+    var ok = false; try { ok = document.execCommand("copy"); } catch(e){}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  $("copyBtn").addEventListener("click", function(){
+    if (!requireValid()) return;
+    var text = buildMessage().replace(/\*/g, "");
+    var done = function(){ toast("Заявка скопирована ✓ Вставьте её в любой мессенджер"); };
+    var fail = function(){
+      $("previewBox").open = true;
+      toast("Не удалось скопировать — выделите текст в предпросмотре", true);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text) ? done() : fail(); });
+    } else { fallbackCopy(text) ? done() : fail(); }
+  });
+
+  /* ---------- Clear ---------- */
+  var clearArmed = false, clearT;
+  $("clearBtn").addEventListener("click", function(){
+    var btn = this;
+    if (!clearArmed) {          // two-tap confirm instead of confirm() dialog
+      clearArmed = true; btn.textContent = "Нажмите ещё раз, чтобы очистить всё";
+      clearT = setTimeout(function(){ clearArmed = false; btn.textContent = "Очистить форму"; }, 3500);
+      return;
+    }
+    clearArmed = false; clearTimeout(clearT); btn.textContent = "Очистить форму";
+    form.reset();
+    $("exactTimeWrap").hidden = true;
+    form.querySelectorAll(".invalid").forEach(function(f){ f.classList.remove("invalid"); });
+    try { localStorage.removeItem(STORE_KEY); } catch(e){}
+    refresh();
+    toast("Форма очищена");
+  });
+
+  /* ---------- Mobile dock: show after hero, hide over the form ---------- */
+  var dock = $("dock"), hero = document.querySelector(".hero"), order = $("order");
+  function dockState(){
+    var heroBottom = hero.getBoundingClientRect().bottom;
+    var o = order.getBoundingClientRect();
+    var inForm = o.top < window.innerHeight * 0.6 && o.bottom > window.innerHeight * 0.4;
+    dock.classList.toggle("show", heroBottom < 0 && !inForm);
+  }
+  window.addEventListener("scroll", dockState, { passive:true });
+  window.addEventListener("resize", dockState);
+
+  loadDraft();
+  refresh();
+  dockState();
+})();
+</script>
+</body>
+</html>
