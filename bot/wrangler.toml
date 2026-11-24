@@ -19,3 +19,7 @@ ALLOWED_ORIGIN = "https://wilyamss.github.io"
 [[kv_namespaces]]
 binding = "KV"
 id = "0d8826426cbb4853a8550c5f1ac5f3cc"
+
+# Расписание: напоминания каждые 5 минут, сводка в 18:00 UTC = 21:00 по Москве
+[triggers]
+crons = ["*/5 * * * *", "0 18 * * *"]

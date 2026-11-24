@@ -294,6 +294,19 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
 .quick{display:flex;gap:6px;flex-wrap:wrap}
 .quick button{min-height:36px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:14px;font-weight:600;color:var(--graphite);cursor:pointer}
 .quick button.on{background:var(--graphite);border-color:var(--graphite);color:#fff}
+.form-layout>*{min-width:0}
+.label-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.geo-btn{border:0;background:var(--teal-soft);color:var(--graphite);font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:6px 12px;cursor:pointer;white-space:nowrap}
+.geo-btn[disabled]{opacity:.6;cursor:progress}
+.geo-note{font-size:13px;color:var(--teal-dark);font-weight:600}
+.repeat{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--teal-soft);border:1.5px solid var(--teal);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px}
+.repeat p{margin:0;font-size:14px;color:var(--graphite);min-width:0}
+.repeat p b{display:block;font-size:15px}
+.repeat .btn{min-height:42px;font-size:15px;padding:0 16px}
+.estimate{background:var(--graphite-3);border-radius:14px;padding:14px 16px;margin-bottom:16px}
+.estimate span{display:block;font-size:13px;color:rgba(255,255,255,.7)}
+.estimate b{display:block;font-family:var(--head);font-size:30px;color:var(--teal);line-height:1.1;margin:2px 0 4px}
+.estimate small{display:block;font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.4}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 </head>
@@ -334,6 +347,10 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
 
       <div class="form-layout">
         <form id="orderForm" novalidate autocomplete="on">
+          <div class="repeat" id="repeatBox" hidden>
+            <p><b>Заказывали раньше?</b><span id="repeatRoute"></span></p>
+            <button type="button" class="btn btn-teal" id="repeatBtn">↺ Как в прошлый раз</button>
+          </div>
           <div class="hp" aria-hidden="true"><label for="company">Не заполняйте</label><input type="text" id="company" name="company" tabindex="-1" autocomplete="off"></div>
           <!-- 1. Contacts -->
           <fieldset class="fs">
@@ -357,8 +374,10 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
             <legend><span class="num">2</span>Маршрут и время</legend>
             <div class="grid2">
               <div class="field" data-req>
-                <label class="label" for="from">Адрес погрузки <span class="req">*</span></label>
+                <div class="label-row"><label class="label" for="from">Адрес погрузки <span class="req">*</span></label><button type="button" class="geo-btn" id="geoBtn">📍 Я здесь</button></div>
                 <input type="text" id="from" name="from" autocomplete="off" placeholder="Город, улица, дом, подъезд">
+                <input type="hidden" id="fromGeo" name="fromGeo">
+                <span class="geo-note" id="geoNote" hidden>📍 Точка на карте прикреплена к заявке</span>
                 <span class="err">Укажите, откуда забрать груз</span>
               </div>
               <div class="field" data-req>
@@ -496,6 +515,11 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
             <div id="sendPanel">
             <h3>Отправка заявки</h3>
             <p id="sendHint">Заявка откроется в WhatsApp готовым сообщением — останется нажать «Отправить».</p>
+            <div class="estimate" aria-live="polite">
+              <span>Ориентировочная стоимость</span>
+              <b id="estVal">от 1 500 ₽</b>
+              <small id="estNote">Минимальный городской заказ. Итоговая цена согласовывается до начала перевозки.</small>
+            </div>
             <div class="progress" aria-hidden="true"><b id="progBar"></b></div>
             <div class="progress-label" id="progLabel">Заполнено 0 из 4 обязательных полей</div>
             <button type="button" class="btn btn-teal btn-block" id="sendOnline" hidden><svg><use href="#i-check"/></svg><span>Отправить заявку</span></button>
@@ -564,6 +588,8 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
   var OWNER_WA = "79883424900";          // +7 988 342-49-00
   // Адрес сервера бота (Cloudflare Worker). Пусто — онлайн-отправка выключена, остаётся WhatsApp.
   var API_URL = "https://gruz-pomoshnik-bot.kamni-kati.workers.dev/order";
+  var SRC = (function(){ try { return (new URLSearchParams(location.search).get("src") || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 32); } catch(e){ return ""; } })();
+  var TARIFF = { base: 1500, loader: 700 };
   var TG = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) ? window.Telegram.WebApp : null;
   var STORE_KEY = "gp-order-draft-v1";
   var form = document.getElementById("orderForm");
@@ -663,6 +689,8 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
     lines.push("📞 *Телефон:* " + (phone.value && phoneDigits(phone.value).length ? formatPhone(phone.value) : "—"));
     lines.push("");
     lines.push("📍 *Погрузка:* " + (val("from") || "—"));
+    var g = val("fromGeo").split(",");
+    if (g.length === 2) lines.push("    🗺 https://yandex.ru/maps/?pt=" + g[1] + "," + g[0] + "&z=17&l=map");
     var ff = floorLine(val("floorFrom"), radio("liftFrom")); if (ff) lines.push("    ↳ " + ff);
     lines.push("🏁 *Доставка:* " + (val("to") || "—"));
     var ft = floorLine(val("floorTo"), radio("liftTo")); if (ft) lines.push("    ↳ " + ft);
@@ -675,7 +703,22 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
     lines.push("💪 *Грузчик:* " + (radio("loader") || "—"));
     lines.push("🏢 *Помощь с выносом/подъёмом:* " + (radio("carry") || "—"));
     if (val("notes")) { lines.push(""); lines.push("💬 *Пожелания:* " + val("notes")); }
+    lines.push("");
+    lines.push("💰 *Ориентировочно:* от " + rub(estimate().total) + " (без учёта км, доп. часов и остановок)");
     return lines.join("\n");
+  }
+
+  /* ---------- Estimate (по тарифам, без расстояния) ---------- */
+  function rub(n){ return n.toLocaleString("ru-RU").replace(/\u00A0/g, " ") + " ₽"; }
+  function estimate(){
+    var l = radio("loader"), loaders = l === "1 грузчик" ? 1 : l === "2 грузчика" ? 2 : 0;
+    var parts = ["минимальный заказ " + rub(TARIFF.base)];
+    if (loaders) parts.push((loaders === 1 ? "грузчик" : "2 грузчика") + " от " + rub(TARIFF.loader * loaders) + "/ч");
+    return { total: TARIFF.base + TARIFF.loader * loaders, parts: parts };
+  }
+  function whenText(){
+    var t = $("time").value === "exact" ? val("exactTime") : $("time").value;
+    return [formatDate(val("date")), t].filter(Boolean).join(", ");
   }
 
   /* ---------- Validation ---------- */
@@ -706,36 +749,36 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
       : "Заполнено " + done + " из " + required.length + " обязательных полей";
     $("previewText").textContent = buildMessage().replace(/\*/g, "");
     $("sendWa").href = waUrl();
+    var est = estimate();
+    $("estVal").textContent = "от " + rub(est.total);
+    $("estNote").textContent = est.parts.join(" + ") + ". Плюс доп. часы (600 ₽), км (35 ₽) и остановки (300 ₽), если понадобятся. Итог согласуем до начала перевозки.";
+    $("geoNote").hidden = !val("fromGeo");
     validate(false);
   }
 
-  /* ---------- Draft save (per-device convenience) ---------- */
-  function saveDraft(){
-    try {
-      var data = {};
-      Array.prototype.forEach.call(form.elements, function(el){
-        if (!el.name) return;
-        if (el.type === "checkbox") { (data[el.name] = data[el.name] || []); if (el.checked) data[el.name].push(el.value); }
-        else if (el.type === "radio") { if (el.checked) data[el.name] = el.value; }
-        else data[el.name] = el.value;
-      });
-      localStorage.setItem(STORE_KEY, JSON.stringify(data));
-    } catch(e){}
+  /* ---------- Form data: draft save, repeat order ---------- */
+  function formData(){
+    var data = {};
+    Array.prototype.forEach.call(form.elements, function(el){
+      if (!el.name || el.name === "company") return;
+      if (el.type === "checkbox") { (data[el.name] = data[el.name] || []); if (el.checked) data[el.name].push(el.value); }
+      else if (el.type === "radio") { if (el.checked) data[el.name] = el.value; }
+      else data[el.name] = el.value;
+    });
+    return data;
   }
-  function loadDraft(){
-    try {
-      var raw = localStorage.getItem(STORE_KEY); if (!raw) return;
-      var data = JSON.parse(raw);
-      Array.prototype.forEach.call(form.elements, function(el){
-        if (!el.name || !(el.name in data)) return;
-        var v = data[el.name];
-        if (el.type === "checkbox") el.checked = Array.isArray(v) && v.indexOf(el.value) > -1;
-        else if (el.type === "radio") el.checked = v === el.value;
-        else el.value = v;
-      });
-      $("exactTimeWrap").hidden = $("time").value !== "exact";
-    } catch(e){}
+  function applyData(data, skip){
+    Array.prototype.forEach.call(form.elements, function(el){
+      if (!el.name || !(el.name in data) || (skip && skip.indexOf(el.name) > -1)) return;
+      var v = data[el.name];
+      if (el.type === "checkbox") el.checked = Array.isArray(v) && v.indexOf(el.value) > -1;
+      else if (el.type === "radio") el.checked = v === el.value;
+      else el.value = v;
+    });
+    $("exactTimeWrap").hidden = $("time").value !== "exact";
   }
+  function saveDraft(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(formData())); } catch(e){} }
+  function loadDraft(){ try { var raw = localStorage.getItem(STORE_KEY); if (raw) applyData(JSON.parse(raw)); } catch(e){} }
 
   form.addEventListener("input", function(){ refresh(); saveDraft(); });
   form.addEventListener("change", function(){ refresh(); saveDraft(); });
@@ -824,7 +867,11 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
     if (!requireValid()) return;
     var label = sendOnline.querySelector("span");
     sendOnline.disabled = true; label.textContent = "Отправляю…";
-    var payload = { text: buildMessage(), name: val("name"), phone: phone.value, hp: $("company").value };
+    var payload = {
+      text: buildMessage(), name: val("name"), phone: phone.value, hp: $("company").value,
+      source: SRC, estimate: estimate().total, form: formData(),
+      meta: { from: val("from"), to: val("to"), when: whenText(), cargo: checks("cargo").join(", "), loader: radio("loader") }
+    };
     if (TG) payload.initData = TG.initData;
     fetch(API_URL, { method:"POST", headers:{ "content-type":"application/json" }, body: JSON.stringify(payload) })
       .then(function(r){ return r.json().catch(function(){ return { ok:false }; }); })
@@ -850,6 +897,70 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
     if (u && !val("name")) $("name").value = [u.first_name, u.last_name].filter(Boolean).join(" ").slice(0,60);
     if (API_URL) $("sendHint").textContent = "Заявка сразу придёт к нам, а бот пришлёт подтверждение.";
     else $("sendWa").classList.remove("tg-hide");   // сервер ещё не подключён: оставляем WhatsApp
+  }
+
+  /* ---------- Geolocation: «Я здесь» ---------- */
+  var geoBtn = $("geoBtn");
+  function getCoords(ok, fail){
+    var LM = TG && TG.LocationManager;
+    if (LM && TG.isVersionAtLeast && TG.isVersionAtLeast("8.0")) {
+      LM.init(function(){
+        if (!LM.isInited || !LM.isLocationAvailable) return browserCoords(ok, fail);
+        if (LM.isAccessRequested && !LM.isAccessGranted) return fail("denied");
+        LM.getLocation(function(loc){ loc ? ok(loc.latitude, loc.longitude) : fail("denied"); });
+      });
+    } else browserCoords(ok, fail);
+  }
+  function browserCoords(ok, fail){
+    if (!navigator.geolocation) return fail("unsupported");
+    navigator.geolocation.getCurrentPosition(function(p){ ok(p.coords.latitude, p.coords.longitude); },
+      function(e){ fail(e && e.code === 1 ? "denied" : "error"); }, { enableHighAccuracy:true, timeout:15000, maximumAge:60000 });
+  }
+  function addressFrom(a){
+    var city = a.city || a.town || a.village || a.hamlet || a.municipality || "";
+    var street = a.road || a.pedestrian || a.neighbourhood || a.suburb || "";
+    return [city, street, a.house_number].filter(Boolean).join(", ");
+  }
+  geoBtn.addEventListener("click", function(){
+    geoBtn.disabled = true; geoBtn.textContent = "Определяю…";
+    var done = function(){ geoBtn.disabled = false; geoBtn.textContent = "📍 Я здесь"; };
+    getCoords(function(lat, lon){
+      lat = lat.toFixed(6); lon = lon.toFixed(6);
+      $("fromGeo").value = lat + "," + lon;
+      var fill = function(addr){
+        $("from").value = addr || ("Точка на карте " + lat + ", " + lon);
+        $("from").dispatchEvent(new Event("input", { bubbles:true }));
+        toast(addr ? "Адрес подставлен. Добавьте подъезд и квартиру, если нужно" : "Точка прикреплена. Уточните адрес, если можете");
+        done();
+      };
+      fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&accept-language=ru&lat=" + lat + "&lon=" + lon)
+        .then(function(r){ return r.json(); })
+        .then(function(d){ fill(d && d.address ? addressFrom(d.address) : ""); })
+        .catch(function(){ fill(""); });
+    }, function(why){
+      done();
+      toast(why === "denied" ? "Нет доступа к геопозиции. Разрешите его в настройках или введите адрес вручную" : "Не удалось определить место. Введите адрес вручную", true);
+    });
+  });
+  $("from").addEventListener("input", function(){ if (!val("from")) { $("fromGeo").value = ""; } });
+
+  /* ---------- Repeat previous order (Telegram) ---------- */
+  if (TG && API_URL) {
+    fetch(API_URL.replace(/\/order$/, "/last"), { method:"POST", headers:{ "content-type":"application/json" }, body: JSON.stringify({ initData: TG.initData }) })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (!d || !d.ok || !d.form || !d.form.from) return;
+        $("repeatRoute").textContent = [d.form.from, d.form.to].filter(Boolean).join(" → ");
+        $("repeatBox").hidden = false;
+        $("repeatBtn").onclick = function(){
+          applyData(d.form, ["date", "time", "exactTime"]);
+          markQuick(); refresh(); saveDraft();
+          $("repeatBox").hidden = true;
+          toast("Заполнили как в прошлый раз. Выберите дату и проверьте детали");
+          $("date").scrollIntoView({ behavior:"smooth", block:"center" });
+        };
+      })
+      .catch(function(){});
   }
 
   loadDraft();
