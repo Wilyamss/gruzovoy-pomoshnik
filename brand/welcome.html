@@ -1,0 +1,52 @@
+<!doctype html><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+<style>html,body{margin:0;width:1280px;height:720px;overflow:hidden;background:#252A2D}
+.wrap{position:relative;width:1280px;height:720px;overflow:hidden}
+.bg{position:absolute;inset:0}
+.txt{position:absolute;left:72px;top:150px;color:#fff;font-family:"Roboto Condensed","Arial Narrow",sans-serif;text-transform:uppercase}
+h1{margin:0;font-size:104px;line-height:.95;font-weight:800;letter-spacing:.5px}
+h1 span{color:#55C8BD}
+.bar{display:inline-block;margin-top:30px;background:#55C8BD;color:#252A2D;font-weight:800;font-size:34px;padding:12px 44px 12px 24px;clip-path:polygon(0 0,100% 0,calc(100% - 24px) 100%,0 100%)}
+.geo{margin-top:34px;font-family:Manrope,sans-serif;text-transform:none;font-weight:700;font-size:27px;color:rgba(255,255,255,.8)}
+.van{position:absolute;right:28px;top:150px}
+.band{position:absolute;left:0;right:0;bottom:0;height:12px;background:#55C8BD}
+</style>
+<div class="wrap">
+<svg class="bg" width="1280" height="720" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hex" width="56" height="97" patternUnits="userSpaceOnUse"><path d="M28 0l28 16v32L28 64 0 48V16zM28 64v33" fill="none" stroke="#fff" stroke-width="2"/></pattern></defs>
+<rect width="1280" height="720" fill="url(#hex)" opacity=".07"/>
+<polygon points="560,720 900,0 1080,0 740,720" fill="#2F3539"/><polygon points="780,720 1120,0 1150,0 810,720" fill="#2F3539"/></svg>
+<div class="txt"><h1>Грузовой<br><span>помощник</span></h1><div class="bar">Доставим. Перевезём. Поможем.</div>
+<div class="geo">Новороссийск и Краснодарский край</div></div>
+<svg class="van" width="560" height="440" viewBox="170 330 700 480" xmlns="http://www.w3.org/2000/svg"><!-- Фургон (вид сбоку), общий для аватарки и приветствия. Координаты в системе 1024×1024. -->
+<defs>
+  <clipPath id="vanBody"><path d="M210 372 H588 Q610 372 626 388 L712 474 Q724 486 742 488 L812 498 Q842 503 846 532 L848 560 V676 Q848 690 834 690 H210 Q194 690 194 674 V388 Q194 372 210 372 Z"/></clipPath>
+</defs>
+<ellipse cx="518" cy="772" rx="360" ry="22" fill="#000" opacity=".28"/>
+<!-- кузов -->
+<path d="M210 372 H588 Q610 372 626 388 L712 474 Q724 486 742 488 L812 498 Q842 503 846 532 L848 560 V676 Q848 690 834 690 H210 Q194 690 194 674 V388 Q194 372 210 372 Z" fill="#E9EEED"/>
+<!-- фирменные полосы на борту -->
+<g clip-path="url(#vanBody)">
+  <polygon points="150,690 300,372 392,372 242,690" fill="#55C8BD"/>
+  <polygon points="276,690 426,372 456,372 306,690" fill="#55C8BD" opacity=".85"/>
+  <polygon points="330,690 480,372 496,372 346,690" fill="#55C8BD" opacity=".65"/>
+  <rect x="194" y="624" width="660" height="22" fill="#55C8BD"/>
+  <rect x="194" y="646" width="660" height="44" fill="#252A2D"/>
+</g>
+<!-- окно кабины -->
+<path d="M622 400 H604 Q598 400 598 406 V474 Q598 480 604 480 H700 Q706 480 702 476 Z" fill="#252A2D"/>
+<!-- линия двери и ручка -->
+<rect x="586" y="396" width="6" height="218" rx="3" fill="#252A2D" opacity=".35"/>
+<rect x="616" y="506" width="36" height="10" rx="5" fill="#252A2D" opacity=".55"/>
+<!-- фара -->
+<path d="M818 514 L842 520 Q846 534 846 546 L822 544 Z" fill="#55C8BD"/>
+<!-- колёса -->
+<g>
+  <circle cx="330" cy="690" r="76" fill="#252A2D"/>
+  <circle cx="330" cy="690" r="57" fill="#15191B"/>
+  <circle cx="330" cy="690" r="25" fill="#55C8BD"/>
+  <circle cx="712" cy="690" r="76" fill="#252A2D"/>
+  <circle cx="712" cy="690" r="57" fill="#15191B"/>
+  <circle cx="712" cy="690" r="25" fill="#55C8BD"/>
+</g>
+</svg>
+<div class="band"></div></div>

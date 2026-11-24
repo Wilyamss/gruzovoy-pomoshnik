@@ -291,6 +291,9 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
 .brand b{display:block;font-family:var(--head);text-transform:uppercase;font-size:19px;line-height:1.1}
 .brand small{display:block;color:var(--teal);font-weight:700;font-size:13px}
 #order{padding-top:28px}
+.quick{display:flex;gap:6px;flex-wrap:wrap}
+.quick button{min-height:36px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:14px;font-weight:600;color:var(--graphite);cursor:pointer}
+.quick button.on{background:var(--graphite);border-color:var(--graphite);color:#fff}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 </head>
@@ -368,6 +371,11 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
               <div class="field">
                 <label class="label" for="date">Желаемая дата</label>
                 <input type="date" id="date" name="date">
+                <div class="quick" id="quickDates">
+                  <button type="button" data-d="0">Сегодня</button>
+                  <button type="button" data-d="1">Завтра</button>
+                  <button type="button" data-d="2">Послезавтра</button>
+                </div>
               </div>
               <div class="field">
                 <label class="label" for="time">Время</label>
@@ -499,7 +507,7 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
             </div>
             <div class="success" id="successPanel" hidden>
               <div class="ok"><svg><use href="#i-check"/></svg></div>
-              <h3>Заявка отправлена</h3>
+              <h3 id="successTitle">Заявка отправлена</h3>
               <p>Скоро свяжемся с вами, чтобы уточнить детали и согласовать стоимость.</p>
               <button type="button" class="btn btn-outline btn-block" id="newOrder">Новая заявка</button>
             </div>
@@ -576,6 +584,24 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
     var d = new Date(), z = function(n){ return (n<10?"0":"")+n; };
     $("date").min = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
   })();
+
+  /* ---------- Quick date picks ---------- */
+  function isoIn(days){
+    var d = new Date(); d.setDate(d.getDate() + days);
+    var z = function(n){ return (n<10?"0":"")+n; };
+    return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
+  }
+  function markQuick(){
+    var v = $("date").value;
+    Array.prototype.forEach.call($("quickDates").children, function(b){ b.classList.toggle("on", v === isoIn(+b.dataset.d)); });
+  }
+  $("quickDates").addEventListener("click", function(e){
+    var b = e.target.closest("button"); if (!b) return;
+    $("date").value = isoIn(+b.dataset.d);
+    $("date").dispatchEvent(new Event("input", { bubbles:true }));
+  });
+  $("date").addEventListener("input", markQuick);
+  $("date").addEventListener("change", markQuick);
 
   /* ---------- Exact time toggle ---------- */
   $("time").addEventListener("change", function(){
@@ -806,6 +832,7 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
         if (!d.ok) throw new Error(d.error || "Не удалось отправить");
         try { localStorage.removeItem(STORE_KEY); } catch(e){}
         if (TG && TG.HapticFeedback) TG.HapticFeedback.notificationOccurred("success");
+        $("successTitle").textContent = d.number ? "Заявка №" + d.number + " отправлена" : "Заявка отправлена";
         showSuccess();
         if (TG) setTimeout(function(){ TG.close(); }, 2500);
       })
@@ -826,6 +853,7 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
   }
 
   loadDraft();
+  markQuick();
   refresh();
 })();
 </script>

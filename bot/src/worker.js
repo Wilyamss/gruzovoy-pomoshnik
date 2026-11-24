@@ -3,14 +3,40 @@
 //
 // Маршруты:
 //   POST /webhook  — обновления от Telegram (защищено секретным заголовком)
-//   POST /order    — заявка из формы (из бота или с сайта) → сообщение владельцу
+//   POST /order    — заявка из формы → сообщение владельцу
 //   GET  /         — проверка, что сервис жив
 //
 // Секреты (wrangler secret put):  BOT_TOKEN, WEBHOOK_SECRET, OWNER_CHAT_ID
-// Переменные (wrangler.toml):      FORM_URL, ALLOWED_ORIGIN
+// Переменные (wrangler.toml):      FORM_URL, WELCOME_IMG, ALLOWED_ORIGIN
+// Хранилище (KV):                  KV — счётчик номеров заявок
 
 const MAX_TEXT = 3500;
 const INITDATA_MAX_AGE = 24 * 3600; // секунд
+const PHONE = "+7 988 342-49-00";
+const WA_OWNER = "https://wa.me/79883424900";
+
+const PRICES =
+  "💰 <b>Ориентировочные цены</b>\n\n" +
+  "🚚 Минимальный городской заказ — <b>от 1 500 ₽</b>\n" +
+  "⏱ Дополнительный час — <b>600 ₽</b>\n" +
+  "🛣 Дополнительный километр — <b>35 ₽</b>\n" +
+  "📍 Дополнительная остановка — <b>300 ₽</b>\n" +
+  "💪 Услуги грузчика — <b>от 700 ₽/час</b>\n" +
+  "🌄 Пригородные маршруты — <b>индивидуальный расчёт</b>\n\n" +
+  "<i>Цены предварительные. Итоговая стоимость согласовывается до начала перевозки и зависит от маршрута, объёма груза, этажности и дополнительных услуг.</i>";
+
+const CONTACTS =
+  "📞 <b>Контакты</b>\n\n" +
+  `Телефон и WhatsApp: <b>${PHONE}</b>\n` +
+  "Telegram: @seywax\n\n" +
+  "📍 Новороссийск и Краснодарский край\n" +
+  "🚐 Лада Ларгус, цельнометаллический фургон";
+
+const WELCOME =
+  "🚚 <b>Грузовой помощник</b>\n" +
+  "<i>Доставим. Перевезём. Поможем.</i>\n\n" +
+  "Грузоперевозки по Новороссийску и Краснодарскому краю: мебель, бытовая техника, личные вещи, небольшие переезды.\n\n" +
+  "👇 Нажмите <b>«Оставить заявку»</b> — это займёт пару минут. Мы свяжемся с вами и согласуем стоимость до начала перевозки.";
 
 export default {
   async fetch(req, env, ctx) {
@@ -36,7 +62,7 @@ export default {
     } catch (e) {
       console.error(e && e.stack || e);
       const r = json({ ok: false, error: "Ошибка сервера. Позвоните или напишите в WhatsApp." }, 500);
-      return url.pathname === "/order" ? withCors(r, req, env) : r;
+      return url.pathname === "/order" ? withCors(r, req, env) : (url.pathname === "/webhook" ? new Response("ok") : r);
     }
   },
 };
@@ -54,11 +80,11 @@ async function tg(env, method, payload) {
   return data;
 }
 
-function orderKeyboard(env) {
+function mainKeyboard(env) {
   return {
     inline_keyboard: [
       [{ text: "📦 Оставить заявку", web_app: { url: env.FORM_URL } }],
-      [{ text: "💬 WhatsApp", url: "https://wa.me/79883424900" }],
+      [{ text: "💰 Цены", callback_data: "prices" }, { text: "📞 Контакты", callback_data: "contacts" }],
     ],
   };
 }
@@ -66,61 +92,146 @@ function orderKeyboard(env) {
 /* ---------------- Updates from Telegram ---------------- */
 
 async function handleUpdate(update, env) {
+  if (update.callback_query) return handleCallback(update.callback_query, env);
+
   const msg = update.message;
   if (!msg || !msg.chat || msg.chat.type !== "private") return;
   const chatId = String(msg.chat.id);
   const isOwner = chatId === String(env.OWNER_CHAT_ID);
   const text = (msg.text || "").trim();
-
-  if (text.startsWith("/start")) {
-    if (isOwner) {
-      await tg(env, "sendMessage", {
-        chat_id: chatId,
-        text: "✅ Вы получаете заявки «Грузового помощника». Новые заявки и вопросы клиентов будут приходить сюда.",
-      });
-      return;
-    }
-    await tg(env, "sendMessage", {
-      chat_id: chatId,
-      parse_mode: "HTML",
-      text:
-        "🚚 <b>Грузовой помощник</b>\n" +
-        "Доставим. Перевезём. Поможем.\n\n" +
-        "Грузоперевозки по Новороссийску и Краснодарскому краю: мебель, бытовая техника, личные вещи, небольшие переезды.\n\n" +
-        "Нажмите <b>«Оставить заявку»</b>, заполните форму за пару минут, и мы свяжемся с вами, чтобы согласовать стоимость.\n\n" +
-        "📞 +7 988 342-49-00",
-      reply_markup: orderKeyboard(env),
-    });
-    return;
-  }
+  const cmd = text.startsWith("/") ? text.split(/[\s@]/)[0].toLowerCase() : "";
 
   if (isOwner) {
-    await tg(env, "sendMessage", {
+    if (cmd === "/start" || cmd === "/help") {
+      return tg(env, "sendMessage", {
+        chat_id: chatId, parse_mode: "HTML",
+        text:
+          "✅ <b>Вы получаете заявки «Грузового помощника».</b>\n\n" +
+          "Под каждой заявкой есть кнопки:\n" +
+          "• <b>✅ Взять в работу</b> — клиенту придёт сообщение, что заявка принята\n" +
+          "• <b>🏁 Выполнена</b> — клиенту придёт благодарность\n" +
+          "• <b>❌ Отказ</b> — отметка для вас, клиенту ничего не уходит\n\n" +
+          "Фото и вопросы клиентов из бота тоже приходят сюда.",
+      });
+    }
+    if (cmd === "/price") return tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", text: PRICES });
+    return tg(env, "sendMessage", {
       chat_id: chatId,
-      text: "Это бот для заявок. Отвечать клиентам удобнее напрямую: по телефону или кнопкой под заявкой.",
+      text: "Это бот для заявок. Клиенту удобнее ответить напрямую: кнопками под его заявкой или сообщением.",
     });
-    return;
   }
 
-  // Любое другое сообщение клиента: передаём владельцу и подсказываем про форму
+  if (cmd === "/start" || cmd === "/help") return sendWelcome(env, chatId);
+  if (cmd === "/price") return tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", text: PRICES, reply_markup: mainKeyboard(env) });
+  if (cmd === "/contacts") return tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", text: CONTACTS, reply_markup: mainKeyboard(env) });
+
+  // Любое другое сообщение клиента (текст, фото, голосовое…) — передаём владельцу
   if (env.OWNER_CHAT_ID) {
     const u = msg.from || {};
-    await tg(env, "sendMessage", {
-      chat_id: env.OWNER_CHAT_ID,
-      parse_mode: "HTML",
-      text: `💬 <b>Сообщение в боте</b> от ${userLink(u)}:`,
-      reply_markup: u.username ? { inline_keyboard: [[{ text: "✉️ Ответить в Telegram", url: `https://t.me/${u.username}` }]] } : undefined,
-    });
+    const isMedia = !!(msg.photo || msg.video || msg.document);
+    // В альбоме из нескольких фото заголовок и ответ клиенту — только один раз
+    let firstInGroup = true;
+    if (msg.media_group_id && env.KV) {
+      const key = `mg:${msg.media_group_id}`;
+      firstInGroup = !(await env.KV.get(key));
+      if (firstInGroup) await env.KV.put(key, "1", { expirationTtl: 120 });
+    }
+    if (firstInGroup) {
+      await tg(env, "sendMessage", {
+        chat_id: env.OWNER_CHAT_ID,
+        parse_mode: "HTML",
+        text: `${isMedia ? "📷 <b>Фото / файл</b>" : "💬 <b>Сообщение</b>"} от ${userLink(u)}:`,
+        reply_markup: u.username ? { inline_keyboard: [[{ text: "✉️ Ответить в Telegram", url: `https://t.me/${u.username}` }]] } : undefined,
+      });
+    }
     await tg(env, "forwardMessage", { chat_id: env.OWNER_CHAT_ID, from_chat_id: chatId, message_id: msg.message_id });
+    if (!firstInGroup) return;
   }
   await tg(env, "sendMessage", {
     chat_id: chatId,
-    text: "Спасибо! Сообщение передано. Чтобы рассчитать перевозку, удобнее всего оставить заявку по кнопке ниже.",
-    reply_markup: orderKeyboard(env),
+    text: msg.photo || msg.video || msg.document
+      ? "📷 Спасибо, передали! Если ещё не оставляли заявку — нажмите кнопку ниже."
+      : "Спасибо, сообщение передано — скоро ответим. Чтобы мы сразу рассчитали перевозку, удобнее оставить заявку по кнопке ниже.",
+    reply_markup: mainKeyboard(env),
   });
 }
 
+async function sendWelcome(env, chatId) {
+  if (env.WELCOME_IMG) {
+    const r = await tg(env, "sendPhoto", {
+      chat_id: chatId, photo: env.WELCOME_IMG, caption: WELCOME, parse_mode: "HTML", reply_markup: mainKeyboard(env),
+    });
+    if (r.ok) return r;
+  }
+  return tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", text: WELCOME, reply_markup: mainKeyboard(env) });
+}
+
+/* ---------------- Inline buttons ---------------- */
+
+async function handleCallback(cq, env) {
+  const data = String(cq.data || "");
+  const fromId = String(cq.from && cq.from.id);
+  const chatId = cq.message && cq.message.chat && cq.message.chat.id;
+
+  if (data === "prices" || data === "contacts") {
+    await tg(env, "answerCallbackQuery", { callback_query_id: cq.id });
+    return tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", text: data === "prices" ? PRICES : CONTACTS, reply_markup: mainKeyboard(env) });
+  }
+
+  // Статусы заявок — только для владельца: "acc|done|rej:<clientId>:<номер>:<телефон>"
+  const m = data.match(/^(acc|done|rej):(\d+):(\d+):(\d{10})$/);
+  if (!m || fromId !== String(env.OWNER_CHAT_ID)) {
+    return tg(env, "answerCallbackQuery", { callback_query_id: cq.id });
+  }
+  const [, action, clientId, num, phone10] = m;
+  const msg = cq.message;
+  const time = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+  const label = { acc: "✅ В работе", done: "🏁 Выполнена", rej: "❌ Отказ" }[action];
+  const statusLine = `\n\n${label} · ${time}`;
+
+  const contactRow = orderContactRow(phone10, msg);
+  const keyboard = action === "acc"
+    ? [[{ text: "🏁 Выполнена", callback_data: `done:${clientId}:${num}:${phone10}` }, { text: "❌ Отказ", callback_data: `rej:${clientId}:${num}:${phone10}` }], contactRow]
+    : [contactRow];
+
+  // Убираем прошлую строку статуса и дописываем новую (форматирование сохраняется — меняем только хвост)
+  const baseText = (msg.text || "").replace(/\n\n(✅ В работе|🏁 Выполнена|❌ Отказ) · .*$/s, "");
+  await tg(env, "editMessageText", {
+    chat_id: msg.chat.id, message_id: msg.message_id,
+    text: baseText + statusLine,
+    entities: (msg.entities || []).filter((e) => e.offset + e.length <= baseText.length),
+    link_preview_options: { is_disabled: true },
+    reply_markup: { inline_keyboard: keyboard },
+  });
+
+  const clientNote = clientId !== "0" && {
+    acc: `✅ Заявка №${num} принята в работу! Скоро свяжемся с вами, чтобы уточнить детали и согласовать стоимость.\n\n📞 ${PHONE}`,
+    done: `🏁 Заявка №${num} выполнена. Спасибо, что выбрали «Грузовой помощник»! Будем рады помочь снова 🚚`,
+  }[action];
+  if (clientNote) await tg(env, "sendMessage", { chat_id: Number(clientId), text: clientNote, reply_markup: mainKeyboard(env) });
+
+  return tg(env, "answerCallbackQuery", {
+    callback_query_id: cq.id,
+    text: action === "rej" ? "Отмечено: отказ" : clientNote ? `${label}. Клиенту отправлено уведомление` : label,
+  });
+}
+
+function orderContactRow(phone10, msg) {
+  const row = [{ text: "💬 WhatsApp", url: `https://wa.me/7${phone10}` }];
+  // Кнопку «Telegram» берём из исходной клавиатуры, если она там была
+  const kb = msg && msg.reply_markup && msg.reply_markup.inline_keyboard || [];
+  for (const r of kb) for (const b of r) if (b.url && b.url.startsWith("https://t.me/")) row.push({ text: "✉️ Telegram", url: b.url });
+  return row;
+}
+
 /* ---------------- Orders from the form ---------------- */
+
+async function nextOrderNumber(env) {
+  if (!env.KV) return null;
+  const n = Number(await env.KV.get("orderSeq") || 0) + 1;
+  await env.KV.put("orderSeq", String(n));
+  return n;
+}
 
 async function handleOrder(req, env) {
   let body;
@@ -145,30 +256,42 @@ async function handleOrder(req, env) {
     if (!tgUser) return json({ ok: false, error: "Не удалось подтвердить отправку из Telegram. Откройте форму из бота ещё раз." }, 403);
   }
 
-  const source = tgUser ? `из бота, ${userLink(tgUser)}` : "с сайта";
-  const message =
-    `🆕 <b>Новая заявка</b> (${source})\n\n` +
-    escapeHtml(text.replace(/\*/g, "")); // убираем WhatsApp-разметку *жирный*
+  const num = await nextOrderNumber(env);
+  const numLabel = num ? ` №${num}` : "";
+  const source = tgUser ? userLink(tgUser) : "с сайта";
+  // Убираем первую строку-заголовок формы и WhatsApp-разметку *жирный*
+  const body_ = text.replace(/\*/g, "").replace(/^🚚[^\n]*\n+/, "");
+  const message = `🆕 <b>Заявка${numLabel}</b> · ${source}\n\n` + escapeHtml(body_);
 
-  const buttons = [[{ text: "💬 WhatsApp клиенту", url: `https://wa.me/7${phone10}` }]];
-  if (tgUser && tgUser.username) buttons.push([{ text: "✉️ Написать в Telegram", url: `https://t.me/${tgUser.username}` }]);
+  const cid = tgUser ? tgUser.id : 0;
+  const n = num || 0;
+  const contactRow = [{ text: "💬 WhatsApp", url: `https://wa.me/7${phone10}` }];
+  if (tgUser && tgUser.username) contactRow.push({ text: "✉️ Telegram", url: `https://t.me/${tgUser.username}` });
 
   const sent = await tg(env, "sendMessage", {
     chat_id: env.OWNER_CHAT_ID,
     parse_mode: "HTML",
     text: message,
     link_preview_options: { is_disabled: true },
-    reply_markup: { inline_keyboard: buttons },
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: "✅ Взять в работу", callback_data: `acc:${cid}:${n}:${phone10}` }, { text: "❌ Отказ", callback_data: `rej:${cid}:${n}:${phone10}` }],
+        contactRow,
+      ],
+    },
   });
   if (!sent.ok) return json({ ok: false, error: "Не удалось отправить заявку. Позвоните или напишите в WhatsApp." }, 502);
 
   if (tgUser) {
     await tg(env, "sendMessage", {
       chat_id: tgUser.id,
-      text: "✅ Заявка принята! Скоро свяжемся с вами, чтобы уточнить детали и согласовать стоимость.\n\n📞 +7 988 342-49-00",
+      text:
+        `📨 Заявка${numLabel} отправлена! Мы скоро свяжемся с вами, чтобы уточнить детали и согласовать стоимость.\n\n` +
+        "📷 Если есть фото груза — пришлите их сюда, это поможет точнее рассчитать перевозку.\n\n" +
+        `📞 ${PHONE}`,
     });
   }
-  return json({ ok: true });
+  return json({ ok: true, number: num });
 }
 
 /* ---------------- Helpers ---------------- */

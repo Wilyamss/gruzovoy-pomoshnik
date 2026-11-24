@@ -1,0 +1,44 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;background:#252A2D}svg{display:block}</style>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+<defs><pattern id="hex" width="56" height="97" patternUnits="userSpaceOnUse"><path d="M28 0l28 16v32L28 64 0 48V16zM28 64v33" fill="none" stroke="#fff" stroke-width="2"/></pattern>
+<radialGradient id="glow" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#55C8BD" stop-opacity=".18"/><stop offset="1" stop-color="#55C8BD" stop-opacity="0"/></radialGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<mask id="m"><rect width="1024" height="1024" fill="url(#fade)"/></mask></defs>
+<rect width="1024" height="1024" fill="#252A2D"/>
+<rect width="1024" height="1024" fill="url(#hex)" opacity=".07" mask="url(#m)"/>
+<rect width="1024" height="1024" fill="url(#glow)"/>
+<polygon points="-60,1024 360,200 500,200 80,1024" fill="#2F3539"/>
+<polygon points="600,1024 1020,200 1050,200 630,1024" fill="#2F3539"/>
+<g transform="translate(512 520) scale(1.02) translate(-521 -560)"><!-- Фургон (вид сбоку), общий для аватарки и приветствия. Координаты в системе 1024×1024. -->
+<defs>
+  <clipPath id="vanBody"><path d="M210 372 H588 Q610 372 626 388 L712 474 Q724 486 742 488 L812 498 Q842 503 846 532 L848 560 V676 Q848 690 834 690 H210 Q194 690 194 674 V388 Q194 372 210 372 Z"/></clipPath>
+</defs>
+<ellipse cx="518" cy="772" rx="360" ry="22" fill="#000" opacity=".28"/>
+<!-- кузов -->
+<path d="M210 372 H588 Q610 372 626 388 L712 474 Q724 486 742 488 L812 498 Q842 503 846 532 L848 560 V676 Q848 690 834 690 H210 Q194 690 194 674 V388 Q194 372 210 372 Z" fill="#E9EEED"/>
+<!-- фирменные полосы на борту -->
+<g clip-path="url(#vanBody)">
+  <polygon points="150,690 300,372 392,372 242,690" fill="#55C8BD"/>
+  <polygon points="276,690 426,372 456,372 306,690" fill="#55C8BD" opacity=".85"/>
+  <polygon points="330,690 480,372 496,372 346,690" fill="#55C8BD" opacity=".65"/>
+  <rect x="194" y="624" width="660" height="22" fill="#55C8BD"/>
+  <rect x="194" y="646" width="660" height="44" fill="#252A2D"/>
+</g>
+<!-- окно кабины -->
+<path d="M622 400 H604 Q598 400 598 406 V474 Q598 480 604 480 H700 Q706 480 702 476 Z" fill="#252A2D"/>
+<!-- линия двери и ручка -->
+<rect x="586" y="396" width="6" height="218" rx="3" fill="#252A2D" opacity=".35"/>
+<rect x="616" y="506" width="36" height="10" rx="5" fill="#252A2D" opacity=".55"/>
+<!-- фара -->
+<path d="M818 514 L842 520 Q846 534 846 546 L822 544 Z" fill="#55C8BD"/>
+<!-- колёса -->
+<g>
+  <circle cx="330" cy="690" r="76" fill="#252A2D"/>
+  <circle cx="330" cy="690" r="57" fill="#15191B"/>
+  <circle cx="330" cy="690" r="25" fill="#55C8BD"/>
+  <circle cx="712" cy="690" r="76" fill="#252A2D"/>
+  <circle cx="712" cy="690" r="57" fill="#15191B"/>
+  <circle cx="712" cy="690" r="25" fill="#55C8BD"/>
+</g>
+</g>
+</svg>

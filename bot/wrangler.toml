@@ -5,6 +5,8 @@ compatibility_date = "2025-06-01"
 [vars]
 # Страница с формой (открывается кнопкой в боте)
 FORM_URL = "https://wilyamss.github.io/gruzovoy-pomoshnik/"
+# Картинка приветствия
+WELCOME_IMG = "https://wilyamss.github.io/gruzovoy-pomoshnik/brand/welcome.png"
 # С каких сайтов принимать заявки
 ALLOWED_ORIGIN = "https://wilyamss.github.io"
 
@@ -12,3 +14,8 @@ ALLOWED_ORIGIN = "https://wilyamss.github.io"
 #   npx wrangler secret put BOT_TOKEN
 #   npx wrangler secret put WEBHOOK_SECRET
 #   npx wrangler secret put OWNER_CHAT_ID
+
+# Хранилище: счётчик номеров заявок и служебные метки
+[[kv_namespaces]]
+binding = "KV"
+id = "0d8826426cbb4853a8550c5f1ac5f3cc"
