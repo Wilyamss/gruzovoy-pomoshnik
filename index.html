@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Грузовой помощник — грузоперевозки в Новороссийске и Краснодарском крае</title>
+<title>Грузовой помощник — заявка на перевозку</title>
 <meta name="description" content="Грузовой помощник: перевозка мебели, бытовой техники, личных вещей и небольшие переезды по Новороссийску и Краснодарскому краю. Онлайн-заявка в WhatsApp.">
 <meta name="theme-color" content="#252A2D">
 <meta property="og:title" content="Грузовой помощник — грузоперевозки">
@@ -287,6 +287,10 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
 .tg .topbar,.tg .hero,.tg #services,.tg .how,.tg #contacts,.tg .dock,.tg footer,.tg .tg-hide{display:none!important}
 .tg #order{padding-top:28px}
 .tg .prices{padding:48px 0 40px}
+.brand{display:flex;align-items:center;gap:12px;background:var(--graphite);color:#fff;padding:14px 16px;border-bottom:4px solid var(--teal)}
+.brand b{display:block;font-family:var(--head);text-transform:uppercase;font-size:19px;line-height:1.1}
+.brand small{display:block;color:var(--teal);font-weight:700;font-size:13px}
+#order{padding-top:28px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 </head>
@@ -310,88 +314,12 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
   </defs>
 </svg>
 
-<header class="topbar">
-  <div class="wrap">
-    <a class="logo" href="#top" aria-label="Грузовой помощник — наверх">
-      <span class="logo-mark"><svg style="color:#252A2D"><use href="#i-van"/></svg></span>
-      <span class="logo-text">Грузовой помощник<small>Грузоперевозки</small></span>
-    </a>
-    <nav class="nav" aria-label="Разделы">
-      <a href="#services">Услуги</a>
-      <a href="#prices">Цены</a>
-      <a href="#order">Заявка</a>
-      <a href="#contacts">Контакты</a>
-    </nav>
-    <a class="top-phone" href="tel:+79883424900" aria-label="Позвонить +7 988 342-49-00">
-      <span class="ico-btn"><svg><use href="#i-phone"/></svg></span><span>+7 988 342-49-00</span>
-    </a>
-  </div>
-</header>
+<div class="brand">
+  <span class="logo-mark"><svg style="color:#252A2D"><use href="#i-van"/></svg></span>
+  <div><b>Грузовой помощник</b><small>Доставим. Перевезём. Поможем.</small></div>
+</div>
 
 <main id="top">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="stripes stripes-a" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <div class="hero-band" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="hero-grid">
-        <div>
-          <span class="badge"><svg><use href="#i-pin"/></svg>Новороссийск и Краснодарский край</span>
-          <h1>Грузовой <span class="accent">помощник</span></h1>
-          <div class="slogan-bar">Доставим. Перевезём. Поможем.</div>
-          <p class="hero-lead">Перевозка мебели, бытовой техники и личных вещей, небольшие переезды. Цельнометаллический фургон Лада Ларгус — груз защищён от дождя и пыли.</p>
-          <div class="hero-actions">
-            <a class="btn btn-teal" href="#order">Оставить заявку</a>
-            <a class="btn btn-wa" href="https://wa.me/79883424900" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp</a>
-            <a class="btn btn-tg" href="https://t.me/seywax" target="_blank" rel="noopener"><svg><use href="#i-tg"/></svg>Telegram</a>
-          </div>
-        </div>
-        <aside class="hero-card" aria-label="Что перевозим">
-          <h3>Что перевозим</h3>
-          <ul class="svc-list">
-            <li><span class="svc-ico"><svg><use href="#i-sofa"/></svg></span>Мебель</li>
-            <li><span class="svc-ico"><svg><use href="#i-fridge"/></svg></span>Бытовая техника</li>
-            <li><span class="svc-ico"><svg><use href="#i-box"/></svg></span>Личные вещи и коробки</li>
-            <li><span class="svc-ico"><svg><use href="#i-home"/></svg></span>Небольшие переезды</li>
-          </ul>
-          <a class="phone-big" href="tel:+79883424900"><small>Звоните</small>+7 988 342-49-00</a>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="section" id="services">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="kicker">Услуги</span>
-        <h2>Аккуратно довезём то, что вам дорого</h2>
-        <p>Работаем по Новороссийску и Краснодарскому краю. Поможем с погрузкой, выносом и подъёмом на этаж.</p>
-      </div>
-      <div class="cards">
-        <article class="card"><span class="svc-ico"><svg><use href="#i-sofa"/></svg></span><h3>Доставка мебели</h3><p>Диваны, шкафы, кровати, столы — из магазина или между адресами.</p></article>
-        <article class="card"><span class="svc-ico"><svg><use href="#i-fridge"/></svg></span><h3>Бытовая техника</h3><p>Холодильники, стиральные машины, плиты — с фиксацией в кузове.</p></article>
-        <article class="card"><span class="svc-ico"><svg><use href="#i-box"/></svg></span><h3>Личные вещи</h3><p>Коробки, сумки, стройматериалы, покупки с маркетплейсов.</p></article>
-        <article class="card"><span class="svc-ico"><svg><use href="#i-home"/></svg></span><h3>Небольшие переезды</h3><p>Квартира, комната, офис — перевезём за один или несколько рейсов.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW -->
-  <section class="section how" style="padding-top:0">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="kicker">Как это работает</span>
-        <h2>Заявка за 2 минуты</h2>
-      </div>
-      <div class="steps">
-        <div class="step"><h3>Заполните форму</h3><p>Адреса, дата, что везём, этажи. Чем подробнее — тем точнее цена.</p></div>
-        <div class="step"><h3>Отправьте заявку</h3><p>Заявка уйдёт к нам сразу. Или соберётся в готовое сообщение для WhatsApp.</p></div>
-        <div class="step"><h3>Согласуем стоимость</h3><p>Перезвоним или напишем и назовём итоговую цену до начала перевозки.</p></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ORDER FORM -->
   <section class="section order" id="order">
     <div class="wrap">
@@ -617,36 +545,7 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
       <div style="margin-top:22px"><a class="btn btn-teal" href="#order">Рассчитать мою перевозку</a></div>
     </div>
   </section>
-
-  <!-- CONTACTS -->
-  <section class="section" id="contacts">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="kicker">Контакты</span>
-        <h2>Свяжитесь удобным способом</h2>
-      </div>
-      <div class="contact-grid">
-        <a class="contact" href="tel:+79883424900"><span class="ci" style="background:var(--graphite);color:var(--teal)"><svg><use href="#i-phone"/></svg></span><span><small>Телефон</small><strong>+7 988 342-49-00</strong></span></a>
-        <a class="contact" href="https://wa.me/79883424900" target="_blank" rel="noopener"><span class="ci" style="background:var(--wa)"><svg><use href="#i-wa"/></svg></span><span><small>WhatsApp</small><strong>+7 988 342-49-00</strong></span></a>
-        <a class="contact" href="https://t.me/seywax" target="_blank" rel="noopener"><span class="ci" style="background:var(--tg)"><svg><use href="#i-tg"/></svg></span><span><small>Telegram</small><strong>@seywax</strong></span></a>
-      </div>
-      <div class="area"><svg><use href="#i-pin"/></svg><div><b>География работы:</b> Новороссийск и Краснодарский край. Автомобиль — серебристая Лада Ларгус, цельнометаллический фургон.</div></div>
-    </div>
-  </section>
 </main>
-
-<footer>
-  <div class="wrap">
-    <span><b>Грузовой помощник</b> · Доставим. Перевезём. Поможем.</span>
-    <span>Новороссийск и Краснодарский край · <a href="tel:+79883424900">+7 988 342-49-00</a></span>
-  </div>
-</footer>
-
-<nav class="dock" id="dock" aria-label="Быстрая связь">
-  <a class="d-call" href="tel:+79883424900" aria-label="Позвонить"><svg><use href="#i-phone"/></svg></a>
-  <a class="d-wa" href="https://wa.me/79883424900" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>
-  <a class="d-order" href="#order">Оставить заявку</a>
-</nav>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -878,17 +777,6 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
     toast("Форма очищена");
   });
 
-  /* ---------- Mobile dock: show after hero, hide over the form ---------- */
-  var dock = $("dock"), hero = document.querySelector(".hero"), order = $("order");
-  function dockState(){
-    var heroBottom = hero.getBoundingClientRect().bottom;
-    var o = order.getBoundingClientRect();
-    var inForm = o.top < window.innerHeight * 0.6 && o.bottom > window.innerHeight * 0.4;
-    dock.classList.toggle("show", heroBottom < 0 && !inForm);
-  }
-  window.addEventListener("scroll", dockState, { passive:true });
-  window.addEventListener("resize", dockState);
-
   /* ---------- Online send (bot server) ---------- */
   var sendOnline = $("sendOnline");
   if (API_URL) {
@@ -939,7 +827,6 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
 
   loadDraft();
   refresh();
-  dockState();
 })();
 </script>
 </body>
