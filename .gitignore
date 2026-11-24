@@ -1,0 +1,4 @@
+bot/.wrangler/
+bot/node_modules/
+.dev.vars
+.DS_Store

@@ -274,6 +274,19 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
 @media(min-width:900px){.toast{bottom:30px}}
 
 @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+/* ---------- Online send / Telegram mode ---------- */
+[hidden]{display:none!important}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.btn[disabled]{opacity:.6;cursor:progress}
+.or{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.5);font-size:13px;margin:14px 0 4px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.15)}
+.success{text-align:center;padding:8px 0 4px}
+.success .ok{width:64px;height:64px;border-radius:50%;background:var(--teal);color:var(--graphite);display:grid;place-items:center;margin:0 auto 14px}
+.success .ok svg{width:34px;height:34px}
+.success h3{margin-bottom:8px}
+.tg .topbar,.tg .hero,.tg #services,.tg .how,.tg #contacts,.tg .dock,.tg footer,.tg .tg-hide{display:none!important}
+.tg #order{padding-top:28px}
+.tg .prices{padding:48px 0 40px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 </head>
@@ -365,7 +378,7 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
   </section>
 
   <!-- HOW -->
-  <section class="section" style="padding-top:0">
+  <section class="section how" style="padding-top:0">
     <div class="wrap">
       <div class="section-head">
         <span class="kicker">Как это работает</span>
@@ -373,8 +386,8 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
       </div>
       <div class="steps">
         <div class="step"><h3>Заполните форму</h3><p>Адреса, дата, что везём, этажи. Чем подробнее — тем точнее цена.</p></div>
-        <div class="step"><h3>Отправьте в WhatsApp</h3><p>Заявка соберётся в готовое сообщение. Останется нажать «Отправить».</p></div>
-        <div class="step"><h3>Согласуем стоимость</h3><p>Перезвоню или напишу, назову итоговую цену до начала перевозки.</p></div>
+        <div class="step"><h3>Отправьте заявку</h3><p>Заявка уйдёт к нам сразу. Или соберётся в готовое сообщение для WhatsApp.</p></div>
+        <div class="step"><h3>Согласуем стоимость</h3><p>Перезвоним или напишем и назовём итоговую цену до начала перевозки.</p></div>
       </div>
     </div>
   </section>
@@ -390,6 +403,7 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
 
       <div class="form-layout">
         <form id="orderForm" novalidate autocomplete="on">
+          <div class="hp" aria-hidden="true"><label for="company">Не заполняйте</label><input type="text" id="company" name="company" tabindex="-1" autocomplete="off"></div>
           <!-- 1. Contacts -->
           <fieldset class="fs">
             <legend><span class="num">1</span>Контакты</legend>
@@ -543,14 +557,24 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
         <!-- Sticky summary / actions -->
         <div class="aside">
           <div class="summary">
+            <div id="sendPanel">
             <h3>Отправка заявки</h3>
-            <p>Заявка откроется в WhatsApp готовым сообщением — останется нажать «Отправить».</p>
+            <p id="sendHint">Заявка откроется в WhatsApp готовым сообщением — останется нажать «Отправить».</p>
             <div class="progress" aria-hidden="true"><b id="progBar"></b></div>
             <div class="progress-label" id="progLabel">Заполнено 0 из 4 обязательных полей</div>
-            <a class="btn btn-wa btn-block" id="sendWa" href="https://wa.me/79883424900" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Отправить заявку в WhatsApp</a>
+            <button type="button" class="btn btn-teal btn-block" id="sendOnline" hidden><svg><use href="#i-check"/></svg><span>Отправить заявку</span></button>
+            <div class="or tg-hide" id="orLine" hidden>или</div>
+            <a class="btn btn-wa btn-block tg-hide" id="sendWa" href="https://wa.me/79883424900" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Отправить заявку в WhatsApp</a>
             <button type="button" class="btn btn-outline btn-block" id="copyBtn"><svg><use href="#i-copy"/></svg>Скопировать заявку</button>
-            <a class="btn btn-tg btn-block" href="https://t.me/seywax" target="_blank" rel="noopener" id="tgBtn" style="margin-top:10px"><svg><use href="#i-tg"/></svg>Написать в Telegram</a>
-            <div class="form-note">В Telegram удобно вставить скопированную заявку. Отправляя заявку, вы соглашаетесь, что я свяжусь с вами по указанному номеру.</div>
+            <a class="btn btn-tg btn-block tg-hide" href="https://t.me/seywax" target="_blank" rel="noopener" id="tgBtn" style="margin-top:10px"><svg><use href="#i-tg"/></svg>Написать в Telegram</a>
+            <div class="form-note">Отправляя заявку, вы соглашаетесь, что мы свяжемся с вами по указанному номеру.</div>
+            </div>
+            <div class="success" id="successPanel" hidden>
+              <div class="ok"><svg><use href="#i-check"/></svg></div>
+              <h3>Заявка отправлена</h3>
+              <p>Скоро свяжемся с вами, чтобы уточнить детали и согласовать стоимость.</p>
+              <button type="button" class="btn btn-outline btn-block" id="newOrder">Новая заявка</button>
+            </div>
           </div>
           <details class="preview" id="previewBox">
             <summary>Предпросмотр сообщения</summary>
@@ -568,7 +592,7 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
       <div class="section-head">
         <span class="kicker">Тарифы</span>
         <h2>Ориентировочные цены</h2>
-        <p>Прозрачно и без сюрпризов: стоимость называю заранее.</p>
+        <p>Прозрачно и без сюрпризов: стоимость называем заранее.</p>
       </div>
       <div class="price-hero">
         <div class="price-main">
@@ -626,10 +650,14 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
 (function(){
   "use strict";
   var OWNER_WA = "79883424900";          // +7 988 342-49-00
+  // Адрес сервера бота (Cloudflare Worker). Пусто — онлайн-отправка выключена, остаётся WhatsApp.
+  var API_URL = "https://gruz-pomoshnik-bot.kamni-kati.workers.dev/order";
+  var TG = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) ? window.Telegram.WebApp : null;
   var STORE_KEY = "gp-order-draft-v1";
   var form = document.getElementById("orderForm");
   var $ = function(id){ return document.getElementById(id); };
@@ -860,6 +888,54 @@ footer b{color:#fff;font-family:var(--head);text-transform:uppercase}
   }
   window.addEventListener("scroll", dockState, { passive:true });
   window.addEventListener("resize", dockState);
+
+  /* ---------- Online send (bot server) ---------- */
+  var sendOnline = $("sendOnline");
+  if (API_URL) {
+    sendOnline.hidden = false;
+    $("orLine").hidden = false;
+    $("sendHint").textContent = "Заявка сразу придёт к нам. Или отправьте её в WhatsApp готовым сообщением.";
+    $("sendWa").classList.remove("btn-wa"); $("sendWa").classList.add("btn-outline");
+  }
+  function showSuccess(){
+    $("sendPanel").hidden = true; $("successPanel").hidden = false;
+    $("successPanel").scrollIntoView({ behavior:"smooth", block:"center" });
+  }
+  $("newOrder").addEventListener("click", function(){
+    form.reset(); $("exactTimeWrap").hidden = true; refresh();
+    $("successPanel").hidden = true; $("sendPanel").hidden = false;
+    window.scrollTo({ top: $("order").offsetTop - 20, behavior:"smooth" });
+  });
+  sendOnline.addEventListener("click", function(){
+    if (!requireValid()) return;
+    var label = sendOnline.querySelector("span");
+    sendOnline.disabled = true; label.textContent = "Отправляю…";
+    var payload = { text: buildMessage(), name: val("name"), phone: phone.value, hp: $("company").value };
+    if (TG) payload.initData = TG.initData;
+    fetch(API_URL, { method:"POST", headers:{ "content-type":"application/json" }, body: JSON.stringify(payload) })
+      .then(function(r){ return r.json().catch(function(){ return { ok:false }; }); })
+      .then(function(d){
+        if (!d.ok) throw new Error(d.error || "Не удалось отправить");
+        try { localStorage.removeItem(STORE_KEY); } catch(e){}
+        if (TG && TG.HapticFeedback) TG.HapticFeedback.notificationOccurred("success");
+        showSuccess();
+        if (TG) setTimeout(function(){ TG.close(); }, 2500);
+      })
+      .catch(function(err){
+        toast((err && err.message && err.message !== "Failed to fetch") ? err.message : "Нет связи. Проверьте интернет или напишите в WhatsApp.", true);
+      })
+      .then(function(){ sendOnline.disabled = false; label.textContent = "Отправить заявку"; });
+  });
+
+  /* ---------- Telegram Mini App mode ---------- */
+  if (TG) {
+    document.documentElement.classList.add("tg");
+    try { TG.ready(); TG.expand(); TG.setHeaderColor("#252A2D"); TG.setBackgroundColor("#FFFFFF"); } catch(e){}
+    var u = TG.initDataUnsafe && TG.initDataUnsafe.user;
+    if (u && !val("name")) $("name").value = [u.first_name, u.last_name].filter(Boolean).join(" ").slice(0,60);
+    if (API_URL) $("sendHint").textContent = "Заявка сразу придёт к нам, а бот пришлёт подтверждение.";
+    else $("sendWa").classList.remove("tg-hide");   // сервер ещё не подключён: оставляем WhatsApp
+  }
 
   loadDraft();
   refresh();
